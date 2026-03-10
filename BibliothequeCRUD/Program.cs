@@ -23,7 +23,7 @@
 
         }
 
-        static void AjouterLivre(Dictionary<int, List<string>> bibliotheque, int compteurNbLivres)
+        static int AjouterLivre(Dictionary<int, List<string>> bibliotheque, int nbIdDisponibles)
         {
             bool ajouterLivre = true;
 
@@ -36,25 +36,28 @@
 
                 Console.Write("Saisir l'auteur : ");
                 string auteur = Console.ReadLine();
+                
+                // Ajouter le livre dans la bibliothèque 
 
-                // Incrémenter le "compteur" à chaque livre crée       
+                bibliotheque.Add(nbIdDisponibles, new List<string> { titre, auteur });
 
-                compteurNbLivres++;
+                // Incrémenter le prochain ID (en cas d'ajout d'un nouveau livre)    
 
-                // Créer + ajouter le livre dans la bibliothèque 
-
-                bibliotheque.Add(compteurNbLivres, new List<string> { titre, auteur });
+                nbIdDisponibles++; 
 
                 Console.WriteLine("Votre livre a été ajouté !"); 
+                
                 Console.WriteLine();
                 Console.Write("Voulez-vous ajouter un autre livre ? (o/n) : ");
                 string reponse = Console.ReadLine();  
 
-                if (reponse == "n")  
+                if (reponse == "n") 
                 {
-                    return; 
+                    break; 
                 }
             }
+
+            return nbIdDisponibles; 
         } 
 
         static void AfficherLivres(Dictionary<int, List<string>> bibliotheque)
@@ -68,7 +71,6 @@
             foreach (KeyValuePair<int, List<string>> d in bibliotheque) 
             {
                 Console.WriteLine("Livre n° " + d.Key);
-
                 string titre = d.Value[0];
 
                 foreach (string infoLivre in d.Value)
@@ -85,32 +87,77 @@
                 Console.WriteLine();  
             }
         }
-       
-        static void GestionnaireDeLivres(string message, Dictionary<int,List<string>> bibliotheque)  
-        {
-            // Création d'un compteur pour garder en mémoire le nombre de livres dans la bibliothèque  
-            int compteurNbLivres = bibliotheque.Count;
 
+        static void SupprimerLivre(Dictionary<int, List<string>> bibliotheque)
+        {
+            // Demander à l'utilisateur l'identifiant du livre à supprimer
+            
+            Console.Write("Saisir l'identifiant du livre à supprimer : ");
+            string idLivreStr = Console.ReadLine();
+
+            // Convertir la réponse utilisateur en type int
+
+            int idLivreInt = int.Parse(idLivreStr);
+
+            // Vérifier si la bibliothèque contient un livre qui correspond à l'id de la saisie utilisateur (idLivre)
+            // -> si oui afficher le livre qui contient l'id saisie par l'utilisateur
+
+            // Si saisie valide -> Afficher le livre qui contient l'id saisie par l'utilisateur
+            if (bibliotheque.ContainsKey(idLivreInt))
+            {
+                Console.WriteLine();
+                Console.WriteLine("Livre n° " + idLivreInt);
+
+                foreach (string e in bibliotheque[idLivreInt])
+                {
+                    if (e == bibliotheque[idLivreInt][0])
+                    {
+                        Console.WriteLine("Titre : " + e);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Auteur : " + e); 
+                    }    
+                }
+                Console.WriteLine();  
+                Console.Write("Etes-vous sûr de vouloir supprimer ce livre ? (o/n) : ");
+                string reponse = Console.ReadLine().ToLower();
+
+                if (reponse == "o")
+                {
+                    bibliotheque.Remove(idLivreInt);  
+                    return;
+                }
+                return;  
+            } 
+        }
+
+        static void GestionnaireDeLivres(string message, Dictionary<int,List<string>> bibliotheque, int numeroId)  
+        {
+            // Création d'un compteur pour garder en mémoire le nombre de livres dans la bibliothèque 
+            int compteurNbLivres = bibliotheque.Count;
+            
             Console.WriteLine(message); 
             Console.WriteLine();
             int reponseUtilisateur = DemanderChoixUtilisateurInt();
-            string optionQuitter; 
+            string optionQuitter;  
             
             if (reponseUtilisateur == 1) 
             {
                 Console.Clear();
-                AjouterLivre(bibliotheque, compteurNbLivres); 
+                // on récupère l'id pour garder en mémoire le numéro de l'id suivant (variable incrémentée dans la fonction)
+                numeroId = AjouterLivre(bibliotheque, numeroId); 
                 Console.WriteLine();
                 optionQuitter = DemanderChoixUtilisateurStr(); 
 
                 if (optionQuitter == "")
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque);  
+                    GestionnaireDeLivres(message, bibliotheque, numeroId);  
                 }      
 
             }
-            else if (reponseUtilisateur == 2)
+            else if (reponseUtilisateur == 2) 
             {
                 Console.Clear();
                 AfficherLivres(bibliotheque);
@@ -120,7 +167,7 @@
                 if (optionQuitter == "") 
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque); 
+                    GestionnaireDeLivres(message, bibliotheque, numeroId); 
                 }
 
             }
@@ -134,21 +181,21 @@
                 if (optionQuitter == "")
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque); 
+                    GestionnaireDeLivres(message, bibliotheque, numeroId); 
                 }
 
             }
             else if (reponseUtilisateur == 4)
             {
                 Console.Clear();
-                Console.WriteLine("Menu supprimer un livre");
+                SupprimerLivre(bibliotheque);  
                 Console.WriteLine();
                 optionQuitter = DemanderChoixUtilisateurStr();
 
                 if (optionQuitter == "")
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque); 
+                    GestionnaireDeLivres(message, bibliotheque, numeroId); 
                 }
             }
             else if (reponseUtilisateur == 5) 
@@ -163,6 +210,7 @@
             + permettre de pouvoir garder les informations en mémoire pour le CRUD ! */  
             
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
+            int numeroId = 1; 
 
             string menuPrincipal = "-------- Menu -------- \n" +
                 "\n" +
@@ -174,7 +222,7 @@
                 "\n" +
                 "----------------------";
               
-            GestionnaireDeLivres(menuPrincipal, bibliotheque); 
+            GestionnaireDeLivres(menuPrincipal, bibliotheque, numeroId); 
             
         }
     }
