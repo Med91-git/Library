@@ -30,7 +30,7 @@
             while (ajouterLivre)
             {
                 // Demander à l'utilisateur les informations nécessaires pour la création d'un livre
-
+                Console.WriteLine();
                 Console.Write("Saisir le titre : "); 
                 string titre = Console.ReadLine();
 
@@ -47,7 +47,7 @@
 
                 Console.WriteLine("Votre livre a été ajouté !"); 
                 Console.WriteLine();
-                Console.WriteLine("Voulez-vous ajouter un autre livre ? (o/n)");
+                Console.Write("Voulez-vous ajouter un autre livre ? (o/n) : ");
                 string reponse = Console.ReadLine();  
 
                 if (reponse == "n")  
@@ -56,10 +56,39 @@
                 }
             }
         } 
+
+        static void AfficherLivres(Dictionary<int, List<string>> bibliotheque)
+        {
+            if (bibliotheque.Count == 0)
+            {
+                Console.WriteLine("Aucun livre existant dans la bibliothèque.");
+                return;
+            }
+
+            foreach (KeyValuePair<int, List<string>> d in bibliotheque) 
+            {
+                Console.WriteLine("Livre n° " + d.Key);
+
+                string titre = d.Value[0];
+
+                foreach (string infoLivre in d.Value)
+                {
+                    if (infoLivre == titre)
+                    {
+                        Console.WriteLine("Titre : " + infoLivre); 
+                    }
+                    else
+                    {
+                        Console.WriteLine("Auteur : " + infoLivre);    
+                    }
+                }
+                Console.WriteLine();  
+            }
+        }
        
         static void GestionnaireDeLivres(string message, Dictionary<int,List<string>> bibliotheque)  
         {
-            // Création d'un compteur pour garder en mémoire le nombre de livres dans la bibliothèque
+            // Création d'un compteur pour garder en mémoire le nombre de livres dans la bibliothèque  
             int compteurNbLivres = bibliotheque.Count;
 
             Console.WriteLine(message); 
@@ -84,7 +113,7 @@
             else if (reponseUtilisateur == 2)
             {
                 Console.Clear();
-                Console.WriteLine("Menu afficher livres"); 
+                AfficherLivres(bibliotheque);
                 Console.WriteLine(); 
                 optionQuitter = DemanderChoixUtilisateurStr();
 
@@ -121,11 +150,10 @@
                     Console.Clear();
                     GestionnaireDeLivres(message, bibliotheque); 
                 }
-
             }
             else if (reponseUtilisateur == 5) 
             {
-                return; 
+                return;  
             } 
         }        
 
