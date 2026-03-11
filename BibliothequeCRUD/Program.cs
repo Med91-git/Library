@@ -187,12 +187,37 @@
             }
         }
 
-        static void GestionnaireDeLivres(string message, Dictionary<int,List<string>> bibliotheque, int numeroId)  
+        static void OptionsMenu(int numero, string option)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(numero);
+            Console.ResetColor();
+            Console.WriteLine(". " + option);
+
+        }
+
+        static void AfficherMenuPrincipal()
+        {
+            string titreMenu = "--------- Menu --------- ";
+            string finMenu = "------------------------ ";
+
+            Console.WriteLine(titreMenu);
+            Console.WriteLine();
+            OptionsMenu(1, "Ajouter un livre");
+            OptionsMenu(2, "Afficher les livres");
+            OptionsMenu(3, "Modifier un livre");
+            OptionsMenu(4, "Supprimer un livre");
+            OptionsMenu(5, "Quitter");
+            Console.WriteLine();
+            Console.WriteLine(finMenu);
+        }
+
+        static void GestionnaireDeLivres(Dictionary<int,List<string>> bibliotheque, int numeroId)  
         {
             // Création d'un compteur pour garder en mémoire le nombre de livres dans la bibliothèque 
             int compteurNbLivres = bibliotheque.Count;
-            
-            Console.WriteLine(message); 
+
+            AfficherMenuPrincipal();  
             Console.WriteLine();
             int reponseUtilisateur = DemanderChoixUtilisateurInt();
             string optionQuitter;  
@@ -208,7 +233,7 @@
                 if (optionQuitter == "")
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque, numeroId);  
+                    GestionnaireDeLivres(bibliotheque, numeroId);  
                 }      
 
             }
@@ -222,7 +247,7 @@
                 if (optionQuitter == "") 
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque, numeroId); 
+                    GestionnaireDeLivres(bibliotheque, numeroId); 
                 }
 
             }
@@ -236,7 +261,7 @@
                 if (optionQuitter == "")
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque, numeroId); 
+                    GestionnaireDeLivres(bibliotheque, numeroId); 
                 }
 
             }
@@ -250,14 +275,14 @@
                 if (optionQuitter == "")
                 {
                     Console.Clear();
-                    GestionnaireDeLivres(message, bibliotheque, numeroId); 
+                    GestionnaireDeLivres(bibliotheque, numeroId); 
                 }
             }
             else if (reponseUtilisateur == 5) 
             {
                 return;  
             } 
-        }        
+        }                
 
         static void Main(string[] args)
         {
@@ -266,19 +291,9 @@
             
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
             int numeroId = 1; 
+                        
+            GestionnaireDeLivres(bibliotheque, numeroId); 
 
-            string menuPrincipal = "-------- Menu -------- \n" +
-                "\n" +
-                "1. Ajouter un livre \n" +
-                "2. Afficher les livres\n" +
-                "3. Modifier un livre\n" +
-                "4. Supprimer un livre\n" +
-                "5. Quitter\n" +
-                "\n" +
-                "----------------------";
-              
-            GestionnaireDeLivres(menuPrincipal, bibliotheque, numeroId); 
-            
         }
     }
 }
