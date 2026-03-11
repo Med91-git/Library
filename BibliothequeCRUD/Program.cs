@@ -132,6 +132,61 @@
             } 
         }
 
+        static void ModifierLivre(Dictionary<int, List<string>> bibliotheque)
+        {
+            // Demander à l'utilisateur l'identifiant du livre à modifier
+
+            Console.Write("Saisir l'identifiant du livre à modifier : ");
+            string idLivreStr = Console.ReadLine();
+
+            // Convertir la réponse utilisateur en type int
+
+            int idLivreInt = int.Parse(idLivreStr);
+
+            // Vérifier si la bibliothèque contient un livre qui correspond à l'id de la saisie utilisateur (idLivre)
+            // -> si oui afficher le livre qui contient l'id saisie par l'utilisateur
+
+            // Si saisie valide -> Afficher le livre qui contient l'id saisie par l'utilisateur
+            if (bibliotheque.ContainsKey(idLivreInt))
+            {
+                Console.WriteLine();
+                Console.WriteLine("Livre n° " + idLivreInt);
+
+                foreach (string e in bibliotheque[idLivreInt])
+                {
+                    if (e == bibliotheque[idLivreInt][0])
+                    {
+                        Console.WriteLine("Titre : " + e);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Auteur : " + e);
+                    }
+                }
+                Console.WriteLine();
+                Console.Write("Etes-vous sûr de vouloir modifier ce livre ? (o/n) : ");
+                string reponse = Console.ReadLine().ToLower();
+
+                if (reponse == "o")
+                {
+                    // Demander à l'utilisateur les nouvelles valeurs à saisir (titre + auteur) 
+                    Console.WriteLine();
+                    Console.Write("Saisir nouveau titre : ");
+                    string nouveauTitre = Console.ReadLine();
+
+                    Console.Write("Saisir nouvel auteur : ");
+                    string nouvelAuteur = Console.ReadLine();
+
+                    // Remplacer les valeurs du dictionnaire par les saisies utilisateurs (à partir de la clé) 
+                     
+                    bibliotheque[idLivreInt][0] = nouveauTitre;
+                    bibliotheque[idLivreInt][1] = nouvelAuteur; 
+                    return;
+                }
+                return; 
+            }
+        }
+
         static void GestionnaireDeLivres(string message, Dictionary<int,List<string>> bibliotheque, int numeroId)  
         {
             // Création d'un compteur pour garder en mémoire le nombre de livres dans la bibliothèque 
@@ -174,7 +229,7 @@
             else if (reponseUtilisateur == 3)
             {
                 Console.Clear();
-                Console.WriteLine("Menu modifier un livre");
+                ModifierLivre(bibliotheque);
                 Console.WriteLine();
                 optionQuitter = DemanderChoixUtilisateurStr(); 
 
