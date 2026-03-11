@@ -7,8 +7,8 @@ Il permet de gérer une petite bibliothèque de livres avec les opérations CRUD
 
 L'objectif principal est de pratiquer sur :
 
-* des notions essentielles de développement **back-end**
-* l'utilisation de **Git** pour la gestion de version
+* Des notions essentielles de développement **back-end**
+* L'utilisation de **Git** pour la gestion de version
 
 ## Fonctionnalités
 
