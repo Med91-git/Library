@@ -1,5 +1,11 @@
 # Bibliothèque de livres (CRUD)
 
+## Aperçu de l'application
+
+Menu principal de l'application console :
+
+![Menu console](screenshot-console.png)  
+
 ## Description
 
 Ce projet est une application console développée en C#.
