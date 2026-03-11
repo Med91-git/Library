@@ -30,10 +30,16 @@ L'objectif principal est de pratiquer sur :
 
 Ce projet a été réalisé dans le but de s'entraîner à :
 
-* structurer un petit programme
-* manipuler des données
-* utiliser Git pour suivre l'évolution du code
+* Structurer un programme en procédural
+* Manipuler des données (Liste et Dictionnaire)
+* Utiliser Git pour suivre l'évolution du code
 
 ## Auteur
 
 Projet réalisé par Médéric KOTTO MOUYEMA 
+
+## Amélioration Prévues 
+
+* Gestion des erreurs utilisateurs
+* Amélioration du menu
+* Refactorisation avec POO  
