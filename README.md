@@ -37,7 +37,7 @@ L'objectif principal est de pratiquer sur :
 Ce projet a été réalisé dans le but de s'entraîner à :
 
 * Structurer un programme en procédural
-* Manipuler des données (Liste et Dictionnaire)
+* Manipuler des structures de données (Liste et Dictionnaire)
 * Utiliser Git pour suivre l'évolution du code
 
 ## Auteur
