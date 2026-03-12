@@ -46,6 +46,5 @@ Projet réalisé par Médéric KOTTO MOUYEMA
 
 ## Amélioration Prévues 
 
-* Gestion des erreurs utilisateurs
-* Amélioration du menu
+* Gestion des erreurs de saisies utilisateurs
 * Refactorisation avec POO  
