@@ -91,69 +91,16 @@
             }
         }
 
-        static void SupprimerLivre(Dictionary<int, List<string>> bibliotheque)
+        static int RechercherLivre(Dictionary<int, List<string>> bibliotheque, string message)
         {
-            // Vérifier que la bilbiothèque possède au moins un livre
+            // Demander à l'utilisateur l'identifiant du livre à modifier
 
-            AfficherLivres(bibliotheque);
-
-            // Demander à l'utilisateur l'identifiant du livre à supprimer
-            
-            Console.Write("Saisir l'identifiant du livre à supprimer : ");
+            Console.Write(message);
             string idLivreStr = Console.ReadLine();
 
             // Convertir la réponse utilisateur en type int
 
             int idLivreInt = int.Parse(idLivreStr);
-
-            // Vérifier si la bibliothèque contient un livre qui correspond à l'id de la saisie utilisateur (idLivre)
-            // Si saisie valide -> Afficher le livre 
-
-            if (bibliotheque.ContainsKey(idLivreInt))
-            {
-                Console.WriteLine();
-                Console.WriteLine("Livre n° " + idLivreInt);
-
-                foreach (string e in bibliotheque[idLivreInt])
-                {
-                    if (e == bibliotheque[idLivreInt][0])
-                    {
-                        Console.WriteLine("Titre : " + e);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Auteur : " + e); 
-                    }    
-                }
-                Console.WriteLine();  
-                Console.Write("Etes-vous sûr de vouloir supprimer ce livre ? (o/n) : ");
-                string reponse = Console.ReadLine().ToLower();
-
-                if (reponse == "o")
-                {
-                    bibliotheque.Remove(idLivreInt);
-                    Console.WriteLine();
-                    Console.WriteLine("Ce livre a été supprimé.");
-                    return;
-                }
-                return;  
-            } 
-        }
-
-        static void ModifierLivre(Dictionary<int, List<string>> bibliotheque)
-        {
-            // Vérifier que la bilbiothèque possède au moins un livre
-
-            AfficherLivres(bibliotheque);
-
-            // Demander à l'utilisateur l'identifiant du livre à modifier
-
-            Console.Write("Saisir l'identifiant du livre à modifier : ");
-            string idLivreStr = Console.ReadLine();
-
-            // Convertir la réponse utilisateur en type int
-
-            int idLivreInt = int.Parse(idLivreStr); 
 
             // Vérifier si la bibliothèque contient un livre qui correspond à l'id de la saisie utilisateur (idLivre)
             // Si saisie utilisateur valide -> Afficher le livre 
@@ -174,30 +121,66 @@
                         Console.WriteLine("Auteur : " + e);
                     }
                 }
+            }
+            else
+            {
+                Console.WriteLine("Erreur : aucun livre ne contient cet identifiant "); 
+            }
+
+            return idLivreInt;
+
+        }
+
+        static void SupprimerLivre(Dictionary<int, List<string>> bibliotheque)
+        {
+            // Vérifier que la bilbiothèque possède au moins un livre
+
+            AfficherLivres(bibliotheque);
+
+            int idLivreASupprimer = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à supprimer : ");
+            
+            Console.WriteLine(); 
+            Console.Write("Etes-vous sûr de vouloir supprimer ce livre ? (o/n) : ");
+            string reponse = Console.ReadLine().ToLower();
+
+            if (reponse == "o")
+            {
+                bibliotheque.Remove(idLivreASupprimer);
                 Console.WriteLine();
-                Console.Write("Etes-vous sûr de vouloir modifier ce livre ? (o/n) : ");
-                string reponse = Console.ReadLine().ToLower();
-
-                if (reponse == "o")
-                {
-                    // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur) 
-
-                    Console.WriteLine();
-                    Console.Write("Saisir nouveau titre : ");
-                    string nouveauTitre = Console.ReadLine();
-
-                    Console.Write("Saisir nouvel auteur : ");
-                    string nouvelAuteur = Console.ReadLine();
-
-                    // Remplacer les valeurs du dictionnaire par les saisies utilisateurs (à partir de la clé du dictionnaire) 
-                     
-                    bibliotheque[idLivreInt][0] = nouveauTitre;
-                    bibliotheque[idLivreInt][1] = nouvelAuteur;
-                    Console.WriteLine();
-                    Console.WriteLine("Ce livre a été modifié.");
-                    return;
-                }
+                Console.WriteLine("Ce livre a été supprimé.");
                 return; 
+            }
+        } 
+
+        static void ModifierLivre(Dictionary<int, List<string>> bibliotheque)
+        {
+            // Vérifier que la bilbiothèque possède au moins un livre
+
+            AfficherLivres(bibliotheque);
+            int idLivreAModifier = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à modifier : "); 
+            
+            Console.WriteLine(); 
+            Console.Write("Etes-vous sûr de vouloir modifier ce livre ? (o/n) : ");
+            string reponse = Console.ReadLine().ToLower();
+
+            if (reponse == "o")
+            {
+                // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur) 
+
+                Console.WriteLine();
+                Console.Write("Saisir nouveau titre : ");
+                string nouveauTitre = Console.ReadLine();
+
+                Console.Write("Saisir nouvel auteur : ");
+                string nouvelAuteur = Console.ReadLine();
+
+                // Remplacer les valeurs du dictionnaire par les saisies utilisateurs (à partir de la clé du dictionnaire) 
+
+                bibliotheque[idLivreAModifier][0] = nouveauTitre;
+                bibliotheque[idLivreAModifier][1] = nouvelAuteur;
+                Console.WriteLine();
+                Console.WriteLine("Ce livre a été modifié."); 
+                return;
             }
         }
 
@@ -314,7 +297,7 @@
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
             int numeroId = 1;  
                         
-            GestionnaireDeLivres(bibliotheque, numeroId);  
+            GestionnaireDeLivres(bibliotheque, numeroId);
 
         }
     }
