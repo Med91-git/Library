@@ -57,7 +57,7 @@
             return nbIdDisponibles; 
         } 
 
-        static bool LivreExisteDansBibliotheque(Dictionary<int, List<string>> bibliotheque)
+        static bool LivreExiste(Dictionary<int, List<string>> bibliotheque)
         {
             if (bibliotheque.Count > 0)
             {
@@ -84,59 +84,59 @@
                 Console.WriteLine("Livre n° " + livre.Key);
                 string titre = livre.Value[0];
 
-                foreach (string infoLivre in livre.Value)
+                foreach (string info in livre.Value)
                 {
-                    if (infoLivre == titre)
+                    if (info == titre)
                     {
-                        Console.WriteLine("Titre : " + infoLivre); 
+                        Console.WriteLine("Titre : " + info); 
                     }
                     else
                     {
-                        Console.WriteLine("Auteur : " + infoLivre);    
+                        Console.WriteLine("Auteur : " + info);    
                     }
                 }
                 Console.WriteLine();  
             }
         }
 
-        static int RechercherLivre(Dictionary<int, List<string>> bibliotheque, string message)
+        static void AfficherLivreParId(Dictionary<int, List<string>> bibliotheque, int idLivre)
         {
-            // Demander à l'utilisateur l'identifiant du livre  
+            List<string> livre = bibliotheque[idLivre];
+            string titre = livre[0];
+
+            foreach (string info in livre)
+            {
+                if (info == titre)
+                {
+                    Console.WriteLine("Titre : " + info);
+                }
+                else
+                {
+                    Console.WriteLine("Auteur : " + info);
+                }
+            }
+        }
+
+        static int RechercherLivre(Dictionary<int, List<string>> bibliotheque, int idLivre)
+        {
             
-            string idLivreStr = DemanderChoixUtilisateurStr(message);
-
-            // Convertir la réponse utilisateur en type int
-
-            int idLivreInt = int.Parse(idLivreStr);
-
             // Vérifier si la bibliothèque contient un livre qui correspond à l'id de la saisie utilisateur (idLivre)
             // Si saisie utilisateur valide -> Afficher le livre 
 
-            if (bibliotheque.ContainsKey(idLivreInt))
+            if (bibliotheque.ContainsKey(idLivre))
             {
                 Console.WriteLine();
-
-                foreach (string e in bibliotheque[idLivreInt])
-                {
-                    if (e == bibliotheque[idLivreInt][0])
-                    {
-                        Console.WriteLine("Titre : " + e);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Auteur : " + e);
-                    }
-                }
+                AfficherLivreParId(bibliotheque, idLivre);
             }
             else
             {
                 Console.WriteLine("Erreur : aucun livre ne contient cet identifiant ");  
             }
 
-            return idLivreInt;
+            return idLivre;
 
         }
-
+        
         static void SupprimerLivre(Dictionary<int, List<string>> bibliotheque)
         {
 
@@ -144,11 +144,14 @@
 
             // Vérifier que la bibliothèque possède au moins un livre avant de supprimer
 
-            bool livreExiste = LivreExisteDansBibliotheque(bibliotheque);
+            bool livreExiste = LivreExiste(bibliotheque);
 
             if (livreExiste)
             {
-                int idLivreASupprimer = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à supprimer : ");
+
+                int idLivre = DemanderChoixUtilisateurInt("Saisir l'identifiant du livre à supprimer : ");
+
+                int idLivreASupprimer = RechercherLivre(bibliotheque, idLivre);
 
                 Console.WriteLine();
                 string reponse = DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir supprimer le livre n° " + idLivreASupprimer + " ? (o/n) : ");
@@ -157,7 +160,7 @@
                 {
                     bibliotheque.Remove(idLivreASupprimer);
                     Console.WriteLine();
-                    Console.WriteLine("Ce livre a été supprimé.");
+                    Console.WriteLine("Ce livre a été supprimé."); 
                     MettreAJourBibliotheque(bibliotheque); 
                     return; 
                 } 
@@ -171,11 +174,13 @@
 
             // Vérifier que la bibliothèque possède au moins un livre avant de modifier
 
-            bool livreExiste = LivreExisteDansBibliotheque(bibliotheque);
+            bool livreExiste = LivreExiste(bibliotheque);
 
             if (livreExiste)
             {
-                int idLivreAModifier = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à modifier : ");
+                int idLivre = DemanderChoixUtilisateurInt("Saisir l'identifiant du livre à modifier : ");
+
+                int idLivreAModifier = RechercherLivre(bibliotheque, idLivre);
 
                 Console.WriteLine();
                 string reponse = DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + idLivreAModifier + " ? (o/n) : ");
@@ -324,6 +329,6 @@
                         
             GestionnaireDeLivres(bibliotheque, numeroId);
 
-        }
+        } 
     }
 }
