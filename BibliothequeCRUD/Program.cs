@@ -3,23 +3,23 @@
     internal class Program
     {
         
-        static string DemanderChoixUtilisateurStr()
+        static string DemanderChoixUtilisateurStr(string message)
         {
-            Console.Write("Tapez la touche Entrez pour revenir au menu principal : ");
-            string choixStr = Console.ReadLine();
+            Console.Write(message);
+            string choixStr = Console.ReadLine().ToString();
 
             return choixStr;
 
         }
 
-        static int DemanderChoixUtilisateurInt()
+        static int DemanderChoixUtilisateurInt(string message) 
         {
-            Console.Write("Faites votre choix : ");
-            string choixStr = Console.ReadLine(); 
+            Console.Write(message); 
+            string choixStr = Console.ReadLine().ToString(); 
             
-            int reponse = int.Parse(choixStr);
+            int choixInt = int.Parse(choixStr);
 
-            return reponse;
+            return choixInt;
 
         }
 
@@ -32,12 +32,9 @@
                 // Demander à l'utilisateur les informations nécessaires pour la création d'un livre
 
                 Console.WriteLine();
-                Console.Write("Saisir le titre : "); 
-                string titre = Console.ReadLine();
+                string titre = DemanderChoixUtilisateurStr("Saisir le titre : ");
+                string auteur = DemanderChoixUtilisateurStr("Saisir l'auteur : "); 
 
-                Console.Write("Saisir l'auteur : ");
-                string auteur = Console.ReadLine();
-                
                 // Ajouter le livre dans la bibliothèque 
 
                 bibliotheque.Add(nbIdDisponibles, new List<string> { titre, auteur });
@@ -45,21 +42,32 @@
                 // Incrémenter le prochain ID (en cas d'ajout d'un nouveau livre)    
 
                 nbIdDisponibles++; 
-
-                Console.WriteLine("Votre livre a été ajouté !"); 
-                
                 Console.WriteLine();
-                Console.Write("Voulez-vous ajouter un autre livre ? (o/n) : ");
-                string reponse = Console.ReadLine().ToString();  
+                Console.WriteLine("Votre livre a été ajouté !");  
+                Console.WriteLine();
+                
+                string reponse = DemanderChoixUtilisateurStr("Voulez-vous ajouter un autre livre ? (o/n) : ");  
 
                 if (reponse == "n") 
                 {
-                    break; 
+                    break;  
                 }
             }
 
             return nbIdDisponibles; 
         } 
+
+        static bool LivreExisteDansBibliotheque(Dictionary<int, List<string>> bibliotheque)
+        {
+            if (bibliotheque.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            } 
+        }
 
         static void AfficherLivres(Dictionary<int, List<string>> bibliotheque)
         {
@@ -93,10 +101,9 @@
 
         static int RechercherLivre(Dictionary<int, List<string>> bibliotheque, string message)
         {
-            // Demander à l'utilisateur l'identifiant du livre à modifier
-
-            Console.Write(message);
-            string idLivreStr = Console.ReadLine();
+            // Demander à l'utilisateur l'identifiant du livre  
+            
+            string idLivreStr = DemanderChoixUtilisateurStr(message);
 
             // Convertir la réponse utilisateur en type int
 
@@ -108,7 +115,6 @@
             if (bibliotheque.ContainsKey(idLivreInt))
             {
                 Console.WriteLine();
-                Console.WriteLine("Livre n° " + idLivreInt);
 
                 foreach (string e in bibliotheque[idLivreInt])
                 {
@@ -124,7 +130,7 @@
             }
             else
             {
-                Console.WriteLine("Erreur : aucun livre ne contient cet identifiant "); 
+                Console.WriteLine("Erreur : aucun livre ne contient cet identifiant ");  
             }
 
             return idLivreInt;
@@ -133,58 +139,77 @@
 
         static void SupprimerLivre(Dictionary<int, List<string>> bibliotheque)
         {
-            // Vérifier que la bilbiothèque possède au moins un livre
 
-            AfficherLivres(bibliotheque);
+            AfficherLivres(bibliotheque); 
 
-            int idLivreASupprimer = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à supprimer : ");
-            
-            Console.WriteLine(); 
-            Console.Write("Etes-vous sûr de vouloir supprimer ce livre ? (o/n) : ");
-            string reponse = Console.ReadLine().ToLower();
+            // Vérifier que la bibliothèque possède au moins un livre avant de supprimer
 
-            if (reponse == "o")
+            bool livreExiste = LivreExisteDansBibliotheque(bibliotheque);
+
+            if (livreExiste)
             {
-                bibliotheque.Remove(idLivreASupprimer);
+                int idLivreASupprimer = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à supprimer : ");
+
                 Console.WriteLine();
-                Console.WriteLine("Ce livre a été supprimé.");
-                return; 
-            }
+                string reponse = DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir supprimer le livre n° " + idLivreASupprimer + " ? (o/n) : ");
+
+                if (reponse.ToLower() == "o")
+                {
+                    bibliotheque.Remove(idLivreASupprimer);
+                    Console.WriteLine();
+                    Console.WriteLine("Ce livre a été supprimé.");
+                    MettreAJourBibliotheque(bibliotheque); 
+                    return; 
+                } 
+            }            
         } 
 
         static void ModifierLivre(Dictionary<int, List<string>> bibliotheque)
         {
-            // Vérifier que la bilbiothèque possède au moins un livre
-
-            AfficherLivres(bibliotheque);
-            int idLivreAModifier = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à modifier : "); 
             
-            Console.WriteLine(); 
-            Console.Write("Etes-vous sûr de vouloir modifier ce livre ? (o/n) : ");
-            string reponse = Console.ReadLine().ToLower();
+            AfficherLivres(bibliotheque);
 
-            if (reponse == "o")
+            // Vérifier que la bibliothèque possède au moins un livre avant de modifier
+
+            bool livreExiste = LivreExisteDansBibliotheque(bibliotheque);
+
+            if (livreExiste)
             {
-                // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur) 
+                int idLivreAModifier = RechercherLivre(bibliotheque, "Saisir l'identifiant du livre à modifier : ");
 
                 Console.WriteLine();
-                Console.Write("Saisir nouveau titre : ");
-                string nouveauTitre = Console.ReadLine();
+                string reponse = DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + idLivreAModifier + " ? (o/n) : ");
 
-                Console.Write("Saisir nouvel auteur : ");
-                string nouvelAuteur = Console.ReadLine();
+                if (reponse.ToLower() == "o")
+                {
+                    // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur) 
 
-                // Remplacer les valeurs du dictionnaire par les saisies utilisateurs (à partir de la clé du dictionnaire) 
+                    Console.WriteLine();
+                    string nouveauTitre = DemanderChoixUtilisateurStr("Saisir nouveau titre : "); 
+                    string nouvelAuteur = DemanderChoixUtilisateurStr("Saisir nouvel auteur : ");
 
-                bibliotheque[idLivreAModifier][0] = nouveauTitre;
-                bibliotheque[idLivreAModifier][1] = nouvelAuteur;
-                Console.WriteLine();
-                Console.WriteLine("Ce livre a été modifié."); 
-                return;
+                    // Remplacer les valeurs du dictionnaire par les saisies utilisateurs (à partir de la clé du dictionnaire) 
+
+                    bibliotheque[idLivreAModifier][0] = nouveauTitre;
+                    bibliotheque[idLivreAModifier][1] = nouvelAuteur;
+                    Console.WriteLine();
+                    Console.WriteLine("Ce livre a été modifié.");
+                    MettreAJourBibliotheque(bibliotheque);  
+                    return;
+                }
             }
+            
         }
 
-        static void OptionsMenu(int numero, string option)
+        static void MettreAJourBibliotheque(Dictionary<int, List<string>> bibliotheque)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Mise à jour de la bibliothèque : ");
+            Console.WriteLine();
+            AfficherLivres(bibliotheque);
+        }
+
+        static void OptionMenu(int numero, string option)
         {
             // Afficher le numéro en couleur
             
@@ -205,11 +230,11 @@
 
             Console.WriteLine(titreMenu);
             Console.WriteLine();
-            OptionsMenu(1, "Ajouter un livre");
-            OptionsMenu(2, "Afficher les livres");
-            OptionsMenu(3, "Modifier un livre");
-            OptionsMenu(4, "Supprimer un livre");
-            OptionsMenu(5, "Quitter");
+            OptionMenu(1, "Ajouter un livre");
+            OptionMenu(2, "Afficher les livres");
+            OptionMenu(3, "Modifier un livre");
+            OptionMenu(4, "Supprimer un livre");
+            OptionMenu(5, "Quitter");
             Console.WriteLine();
             Console.WriteLine(finMenu);
         }
@@ -222,10 +247,10 @@
 
             AfficherMenuPrincipal();  
             Console.WriteLine();
-            int reponseUtilisateur = DemanderChoixUtilisateurInt();
+            int numOption = DemanderChoixUtilisateurInt("Faites votre choix : ");
             string optionQuitter;  
             
-            if (reponseUtilisateur == 1) 
+            if (numOption == 1) 
             {
                 Console.Clear();
 
@@ -233,7 +258,7 @@
 
                 numeroId = AjouterLivre(bibliotheque, numeroId); 
                 Console.WriteLine();
-                optionQuitter = DemanderChoixUtilisateurStr(); 
+                optionQuitter = DemanderChoixUtilisateurStr("Tapez la touche Entrez pour revenir au menu principal : "); 
 
                 if (optionQuitter == "")
                 {
@@ -242,12 +267,12 @@
                 }      
 
             }
-            else if (reponseUtilisateur == 2) 
+            else if (numOption == 2) 
             {
                 Console.Clear();
-                AfficherLivres(bibliotheque);
+                AfficherLivres(bibliotheque); 
                 Console.WriteLine(); 
-                optionQuitter = DemanderChoixUtilisateurStr();
+                optionQuitter = DemanderChoixUtilisateurStr("Tapez la touche Entrez pour revenir au menu principal : ");
 
                 if (optionQuitter == "") 
                 {
@@ -256,12 +281,12 @@
                 }
 
             }
-            else if (reponseUtilisateur == 3)
+            else if (numOption == 3)
             {
                 Console.Clear();
                 ModifierLivre(bibliotheque);
                 Console.WriteLine();
-                optionQuitter = DemanderChoixUtilisateurStr(); 
+                optionQuitter = DemanderChoixUtilisateurStr("Tapez la touche Entrez pour revenir au menu principal : "); 
 
                 if (optionQuitter == "")
                 {
@@ -270,12 +295,12 @@
                 }
 
             }
-            else if (reponseUtilisateur == 4)
+            else if (numOption == 4)
             {
                 Console.Clear();
                 SupprimerLivre(bibliotheque);  
                 Console.WriteLine();
-                optionQuitter = DemanderChoixUtilisateurStr();
+                optionQuitter = DemanderChoixUtilisateurStr("Tapez la touche Entrez pour revenir au menu principal : ");
 
                 if (optionQuitter == "")
                 {
@@ -283,7 +308,7 @@
                     GestionnaireDeLivres(bibliotheque, numeroId); 
                 }
             }
-            else if (reponseUtilisateur == 5) 
+            else if (numOption == 5) 
             {
                 return;  
             } 
