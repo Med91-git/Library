@@ -2,13 +2,91 @@
 {
     internal class Program
     {
-        
+        static bool ContientCaractereSpecial(string info, char[] caracterespeciaux)
+        {
+            
+            foreach (char caractereSpecial in caracterespeciaux)
+            {
+                foreach (char caractere in info)
+                {
+                    if (info.Contains(caractereSpecial))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false; 
+
+        }
+
+        static string DemanderInformationLivre(string message)
+        {
+            char[] caracteresSpeciauxAutorises = {'\'','-','.',',',':','(',')'};  
+            char[] caracteresSpeciauxInterdits = {'#','$','%','&','*','+','=','<','>','?','@','[',']','/','^','_','`','{','}','|','~'};
+            string infoLivre = "";
+            bool contientCaractereSpecial = false; 
+
+            while (infoLivre == "" || contientCaractereSpecial == true) 
+            {
+                infoLivre = DemanderChoixUtilisateurStr(message); 
+
+                // Gérer cas d'erreur saisie utilisateur vide 
+
+                infoLivre = infoLivre.Trim();
+
+                if (infoLivre == "")
+                {
+                    Console.WriteLine("Vous devez saisir une information.");
+                }
+
+                // Gérer cas d'erreur caractères spéciaux  
+
+                contientCaractereSpecial = ContientCaractereSpecial(infoLivre, caracteresSpeciauxInterdits);
+                
+                if (contientCaractereSpecial)
+                {
+                    Console.WriteLine("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants :");
+                    Console.WriteLine();
+                    foreach (char caractereSpecial in caracteresSpeciauxAutorises)
+                    {
+                        char premierCaractere = caracteresSpeciauxAutorises[0];
+                        char dernierCaractere = caracteresSpeciauxAutorises[caracteresSpeciauxAutorises.Length - 1];
+
+                        if (caractereSpecial == premierCaractere)
+                        {
+                            Console.Write("apostrophe (" + caractereSpecial + "), "); 
+                        }
+                        else if (caractereSpecial == dernierCaractere)
+                        {
+                            Console.Write("'" + caractereSpecial + "'"); 
+                        }
+                        else
+                        {
+                            Console.Write("'" + caractereSpecial + "', "); 
+                        }
+                    }
+                    Console.WriteLine(); 
+                }
+                
+                // Saisie utilisateur valide 
+
+                if (infoLivre != "" && contientCaractereSpecial == false) 
+                {
+                    break;  
+                }
+                Console.WriteLine();
+                
+            }
+            return infoLivre;
+            
+        }
+
         static string DemanderChoixUtilisateurStr(string message)
         {
             Console.Write(message);
             string choixStr = Console.ReadLine().ToString();
 
-            return choixStr;
+            return choixStr; 
 
         }
 
@@ -20,8 +98,7 @@
             {
                 // Récupérer la saisie utilisateur
                 
-                Console.Write(message);
-                string choixStr = Console.ReadLine().ToString();
+                string choixStr = DemanderChoixUtilisateurStr(message);
 
                 // Vérifier la validité de la saisie utilisateur  
 
@@ -58,8 +135,7 @@
         static int DemanderChoixUtilisateurInt(string message)  
         {
 
-            Console.Write(message);
-            string choixStr = Console.ReadLine().ToString();
+            string choixStr = DemanderChoixUtilisateurStr(message);
 
             int choixInt = int.Parse(choixStr);
             
@@ -76,16 +152,17 @@
                 // Demander à l'utilisateur les informations nécessaires pour la création d'un livre
 
                 Console.WriteLine();
-                string titre = DemanderChoixUtilisateurStr("Saisir le titre : ");
-                string auteur = DemanderChoixUtilisateurStr("Saisir l'auteur : "); 
-
-                // Ajouter le livre dans la bibliothèque 
+                string titre = DemanderInformationLivre("Saisir le titre : ");
+                string auteur = DemanderInformationLivre("Saisir l'auteur : ");  
+                
+                // Ajouter le livre dans la bibliothèque  
 
                 bibliotheque.Add(nbIdDisponibles, new List<string> { titre, auteur });
 
                 // Incrémenter le prochain ID (en cas d'ajout d'un nouveau livre)    
 
                 nbIdDisponibles++; 
+
                 Console.WriteLine();
                 Console.WriteLine("Votre livre a été ajouté !");  
                 Console.WriteLine();
@@ -234,8 +311,8 @@
                     // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur) 
 
                     Console.WriteLine();
-                    string nouveauTitre = DemanderChoixUtilisateurStr("Saisir nouveau titre : "); 
-                    string nouvelAuteur = DemanderChoixUtilisateurStr("Saisir nouvel auteur : ");
+                    string nouveauTitre = DemanderInformationLivre("Saisir nouveau titre : "); 
+                    string nouvelAuteur = DemanderInformationLivre("Saisir nouvel auteur : ");
 
                     // Remplacer les valeurs du dictionnaire par les saisies utilisateurs (à partir de la clé du dictionnaire) 
 
@@ -369,9 +446,9 @@
             + permettre de pouvoir garder les informations en mémoire pour le CRUD ! */   
             
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
-            int numeroId = 1;  
-                        
-            GestionnaireDeLivres(bibliotheque, numeroId); 
+            int numeroId = 1;
+
+            GestionnaireDeLivres(bibliotheque, numeroId);  
 
         } 
     }
