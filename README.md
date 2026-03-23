@@ -44,6 +44,12 @@ Ce projet a été réalisé dans le but de s'entraîner à :
 
 Projet réalisé par Médéric KOTTO MOUYEMA 
 
+## Améliorations Réalisées 
+
+* Refactorisation du code 
+* Ajout Gestion des saisies utilisateur
+* Amélioration UX
+
 ## Amélioration Prévue 
 
 * Refactorisation du programme en POO  
