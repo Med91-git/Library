@@ -129,17 +129,48 @@
 
             return choixInt;
 
-
         }
 
-        static int DemanderChoixUtilisateurInt(string message)  
+        static int DemanderIdLivre(string message)  
         {
+            int choixInt = 0;
 
-            string choixStr = DemanderChoixUtilisateurStr(message);
+            while (true)
+            {
+                string choixStr = DemanderChoixUtilisateurStr(message);
 
-            int choixInt = int.Parse(choixStr);
-            
-            return choixInt;  
+                try
+                {
+                    choixInt = int.Parse(choixStr);
+                    
+                    if (choixInt < 0)
+                    {
+                        Console.WriteLine("Choix invalide : le numéro ne peut pas être négatif");
+                    }
+                    else if (choixInt == 0)
+                    {
+                        Console.WriteLine("Choix invalide : l'identifiant ne peut pas être égal à 0");
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    
+                }
+                catch
+                {
+                    Console.WriteLine("Vous devez saisir un nombre");
+                }
+                Console.WriteLine();
+            }
+            return choixInt;
+
+
+
+
+
+
 
         }
 
@@ -244,17 +275,22 @@
             // Vérifier si la bibliothèque contient un livre qui correspond à l'id de la saisie utilisateur (idLivre)
             // Si saisie utilisateur valide -> Afficher le livre 
 
-            if (bibliotheque.ContainsKey(idLivre))
+            while (!bibliotheque.ContainsKey(idLivre))
             {
-                Console.WriteLine();
-                AfficherLivreParId(bibliotheque, idLivre);
-            }
-            else
-            {
-                Console.WriteLine("Erreur : aucun livre ne contient cet identifiant ");  
-            }
-
-            return idLivre;
+                if (bibliotheque.ContainsKey(idLivre))
+                {
+                    Console.WriteLine();
+                    AfficherLivreParId(bibliotheque, idLivre);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Erreur : livre introuvable "); 
+                    Console.WriteLine();
+                    idLivre = DemanderIdLivre("Saisir l'identifiant du livre à supprimer : ");
+                }
+            }            
+            return idLivre; 
 
         }
         
@@ -270,7 +306,7 @@
             if (livreExiste)
             {
 
-                int idLivre = DemanderChoixUtilisateurInt("Saisir l'identifiant du livre à supprimer : ");
+                int idLivre = DemanderIdLivre("Saisir l'identifiant du livre à supprimer : ");
 
                 int idLivreASupprimer = RechercherLivre(bibliotheque, idLivre);
 
@@ -299,7 +335,7 @@
 
             if (livreExiste)
             {
-                int idLivre = DemanderChoixUtilisateurInt("Saisir l'identifiant du livre à modifier : ");
+                int idLivre = DemanderIdLivre("Saisir l'identifiant du livre à modifier : ");
 
                 int idLivreAModifier = RechercherLivre(bibliotheque, idLivre);
 
@@ -448,7 +484,8 @@
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
             int numeroId = 1;
 
-            GestionnaireDeLivres(bibliotheque, numeroId);  
+            GestionnaireDeLivres(bibliotheque, numeroId);    
+            
 
         } 
     }
