@@ -12,14 +12,58 @@
 
         }
 
-        static int DemanderChoixUtilisateurInt(string message) 
+        static int DemanderOptionMenu(string message, int min , int max)
         {
-            Console.Write(message); 
-            string choixStr = Console.ReadLine().ToString(); 
-            
-            int choixInt = int.Parse(choixStr);
+            int choixInt = 0;
+
+            while (true)
+            {
+                // Récupérer la saisie utilisateur
+                
+                Console.Write(message);
+                string choixStr = Console.ReadLine().ToString();
+
+                // Vérifier la validité de la saisie utilisateur  
+
+                try
+                {
+                    choixInt = int.Parse(choixStr);
+
+                    if (choixInt >= min && choixInt <= max)
+                    {
+                        break;
+                    }
+                    else if (choixInt < 0)
+                    {
+                        Console.WriteLine("Choix invalide : le numéro ne peut pas être négatif");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Choix invalide : vous devez saisir un numéro entre 1 et 5"); 
+                    }
+
+                }
+                catch
+                {
+                    Console.WriteLine("Erreur : vous devez saisir un nombre");  
+                }
+                Console.WriteLine();
+            }
 
             return choixInt;
+
+
+        }
+
+        static int DemanderChoixUtilisateurInt(string message)  
+        {
+
+            Console.Write(message);
+            string choixStr = Console.ReadLine().ToString();
+
+            int choixInt = int.Parse(choixStr);
+            
+            return choixInt;  
 
         }
 
@@ -250,9 +294,9 @@
 
             int compteurNbLivres = bibliotheque.Count;
 
-            AfficherMenuPrincipal();  
+            AfficherMenuPrincipal();   
             Console.WriteLine();
-            int numOption = DemanderChoixUtilisateurInt("Faites votre choix : ");
+            int numOption = DemanderOptionMenu("Faites votre choix (saisir un numéro) : ", 1, 5); 
             string optionQuitter;  
             
             if (numOption == 1) 
@@ -327,7 +371,7 @@
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
             int numeroId = 1;  
                         
-            GestionnaireDeLivres(bibliotheque, numeroId);
+            GestionnaireDeLivres(bibliotheque, numeroId); 
 
         } 
     }
