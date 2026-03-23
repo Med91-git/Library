@@ -44,6 +44,6 @@ Ce projet a été réalisé dans le but de s'entraîner à :
 
 Projet réalisé par Médéric KOTTO MOUYEMA 
 
-## Amélioration Prévues 
+## Amélioration Prévue 
 
 * Refactorisation du programme en POO  
