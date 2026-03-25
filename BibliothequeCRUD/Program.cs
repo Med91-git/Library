@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        // Fonctions liées au traitement des données (CRUD)   
+        // Fonctions liées au traitement des données (CRUD)    
 
         static void GestionnaireDeLivres(Dictionary<int, List<string>> bibliotheque, int numeroId, string optionQuitter)
         {
@@ -27,7 +27,7 @@
 
                     numeroId = AjouterLivre(bibliotheque, numeroId, optionQuitter); 
                 }
-                else if (numOption == 2) // bug a toruver quand on choisit l'option n°2 du menu principal
+                else if (numOption == 2) 
                 {
                     Console.Clear();
 
@@ -60,80 +60,77 @@
         {
             string reponseAjoutLivre = ""; 
             
-            while (true)
+            while (true) 
             {
-                // Demander à l'utilisateur les informations nécessaires pour la création d'un livre
+                // Demander à l'utilisateur les informations nécessaires pour la création d'un livre  
 
                 Console.WriteLine();
                 string titre = DemanderInformationLivre("Saisir le titre : ");
                 string auteur = DemanderInformationLivre("Saisir l'auteur : ");  
-                
+                                
                 // Ajouter le livre dans la bibliothèque  
 
                 bibliotheque.Add(nbIdDisponibles, new List<string> { titre, auteur });
 
                 // Incrémenter le prochain ID (en cas d'ajout d'un nouveau livre)    
-
-                nbIdDisponibles++; 
-
+                nbIdDisponibles++;
                 Console.WriteLine();
 
                 // Afficher la confirmation de modification en couleur
 
                 AjouterCouleurMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green); 
 
-                // Redéfinir la couleur de la console par défaut
-
-                Console.ResetColor();
                 Console.WriteLine();
-                
-                // Boucler tant que la réponse de l'utilisateur est différent de oui ET de non 
-                
+
+                reponseAjoutLivre = DemanderChoixUtilisateurStr("Voulez-vous ajouter un autre livre ? (o/n) : ");
+                Console.WriteLine();
+
+                // boucler ici pr reponse invalide
+
                 while (reponseAjoutLivre != "o" && reponseAjoutLivre != "n")
                 {
-                    reponseAjoutLivre = DemanderChoixUtilisateurStr("Voulez-vous ajouter un autre livre ? (o/n) : ");
+                    AjouterCouleurErreursChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
                     Console.WriteLine();
-                    if (reponseAjoutLivre == "o") 
-                    {
-                        Console.Clear();
-                        AjouterLivre(bibliotheque, nbIdDisponibles, optionQuitter);
-                    }
-                    else if (reponseAjoutLivre == "n")  
-                    {
-                        // Mettre un caractère vide pour rentrer dans la condition de la boucle while 
+                    reponseAjoutLivre = DemanderChoixUtilisateurStr("Voulez-vous ajouter un autre livre ? (o/n) : ");                    
 
-                        optionQuitter = " ";   
-
-                        // Boucler tant que l'utilisateur n'a pas entré la bonne touche (mettre l'appel de la fonction "revenir au menu principal"
-
-                        while (optionQuitter != "")
-                        {
-                            optionQuitter = DemanderChoixUtilisateurStr("Tapez la touche Entrez pour revenir au menu principal : "); 
-
-                            if (optionQuitter == "")
-                            {
-                                Console.Clear();
-                                return nbIdDisponibles;
-                            }
-                            else
-                            {
-                                Console.WriteLine();
-                                AjouterCouleurErreursChoixUtilisateur("Vous devez appuyer sur la touche 'Entrez' pour quitter.", ConsoleColor.Yellow);
-                            }
-                            Console.WriteLine(); 
-
-                        }
-
-                    }
-                    else
-                    {
-                        AjouterCouleurErreursChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow); 
-                        Console.WriteLine();  
-                    }
                 }
 
-                return nbIdDisponibles; 
-            }            
+                if (reponseAjoutLivre == "o")
+                {
+                    Console.Clear();
+
+                }
+                else if (reponseAjoutLivre == "n")
+                {
+                    // Mettre un caractère vide pour rentrer dans la condition de la boucle while 
+
+                    optionQuitter = " ";
+
+                    // Boucler tant que l'utilisateur n'a pas entré la bonne touche (mettre l'appel de la fonction "revenir au menu principal"
+
+                    while (optionQuitter != "")
+                    {
+                        Console.WriteLine();
+                        optionQuitter = DemanderChoixUtilisateurStr("Tapez la touche Entrez pour revenir au menu principal : ");
+
+                        if (optionQuitter == "")
+                        {
+                            Console.Clear();
+                            return nbIdDisponibles;
+                        }
+                        else
+                        {
+                            Console.WriteLine();
+                            AjouterCouleurErreursChoixUtilisateur("Vous devez appuyer sur la touche 'Entrez' pour quitter.", ConsoleColor.Yellow);
+                        }
+                        Console.WriteLine();
+
+                    }
+
+                }
+
+            }
+            
         } 
 
         static bool LivreExiste(Dictionary<int, List<string>> bibliotheque) 
@@ -348,7 +345,7 @@
                 }
             }
             
-        }
+        } 
 
         static void MettreAJourBibliotheque(Dictionary<int, List<string>> bibliotheque, string optionQuitter)
         {
@@ -358,8 +355,7 @@
             AfficherLivres(bibliotheque, optionQuitter);
         }
 
-
-        // Fonctions liées à l'interface du menu (affichage + intéractions avec l'utilisateur) 
+        // Fonctions liées à l'interface du menu (affichage + intéractions avec l'utilisateur)   
 
         static bool ContientCaractereSpecial(string info, char[] caracterespeciaux)
         {
