@@ -2,6 +2,8 @@
 {
     internal class Program
     {
+        // Fonctions liées au traitement des données (CRUD)  
+
         static void GestionnaireDeLivres(Dictionary<int, List<string>> bibliotheque, int numeroId, string optionQuitter)
         {
             int optionQuitterProgramme = 5;
@@ -116,7 +118,8 @@
                             }
                             else
                             {
-                                Console.WriteLine("Vous devez appuyer sur la touche 'Entrez' pour quitter.");
+                                Console.WriteLine();
+                                AjouterCouleurErreursChoixUtilisateur("Vous devez appuyer sur la touche 'Entrez' pour quitter.", ConsoleColor.Yellow);
                             }
                             Console.WriteLine(); 
 
@@ -125,7 +128,7 @@
                     }
                     else
                     {
-                        Console.WriteLine("Vous devez répondre 'o' pour oui ou 'n' pour non.");
+                        AjouterCouleurErreursChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow); 
                         Console.WriteLine();  
                     }
                 }
@@ -134,7 +137,7 @@
             }            
         } 
 
-        static bool LivreExiste(Dictionary<int, List<string>> bibliotheque)
+        static bool LivreExiste(Dictionary<int, List<string>> bibliotheque) 
         {
             if (bibliotheque.Count > 0)
             {
@@ -185,7 +188,6 @@
             List<string> livre = bibliotheque[idLivre];
             string titre = livre[0]; 
 
-
             foreach (string info in livre)
             {
                 if (info == titre)
@@ -216,7 +218,7 @@
                 else
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Erreur : livre introuvable ");  
+                    AjouterCouleurErreursChoixUtilisateur("Erreur : livre introuvable ", ConsoleColor.Red); 
                     Console.WriteLine();
                     idLivre = DemanderIdLivre(message); 
                 }
@@ -276,7 +278,7 @@
                     else
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Vous devez répondre 'o' pour oui ou 'n' pour non."); 
+                        AjouterCouleurErreursChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
                     }
                 }
 
@@ -298,7 +300,7 @@
                 RevenirAuMenuPrincipal(optionQuitter);
             }
 
-            if (livreExiste)
+            if (livreExiste) 
             {
                 
                 int idLivre = DemanderIdLivre("Saisir l'identifiant du livre à modifier : ");
@@ -344,7 +346,7 @@
                     else
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Vous devez répondre 'o' pour oui ou 'n' pour non."); 
+                        AjouterCouleurErreursChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
                     }
                 }
             }
@@ -396,6 +398,7 @@
 
                 if (infoLivre == "")
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Vous devez saisir une information.");
                 }
 
@@ -405,9 +408,11 @@
 
                 if (contientCaractereSpecial)
                 {
-                    Console.WriteLine("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants :");
+                    Console.WriteLine(); 
+                    //Console.WriteLine("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants :");
+                    AjouterCouleurErreursChoixUtilisateur("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants :", ConsoleColor.DarkYellow);
                     Console.WriteLine();
-                    foreach (char caractereSpecial in caracteresSpeciauxAutorises)
+                    foreach (char caractereSpecial in caracteresSpeciauxAutorises) 
                     {
                         char premierCaractere = caracteresSpeciauxAutorises[0];
                         char dernierCaractere = caracteresSpeciauxAutorises[caracteresSpeciauxAutorises.Length - 1];
@@ -475,19 +480,19 @@
                     else if (choixInt < 0)
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Choix invalide : le numéro ne peut pas être négatif");
+                        AjouterCouleurErreursChoixUtilisateur("Choix invalide : le numéro ne peut pas être négatif", ConsoleColor.Yellow); 
                     }
                     else
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Choix invalide : vous devez saisir un numéro entre 1 et 5");
+                        AjouterCouleurErreursChoixUtilisateur("Choix invalide : vous devez saisir un numéro entre 1 et 5", ConsoleColor.Yellow);
                     }
 
                 }
                 catch
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Erreur : vous devez saisir un nombre");
+                    AjouterCouleurErreursChoixUtilisateur("Erreur : vous devez saisir un nombre", ConsoleColor.Red);
                 }
                 Console.WriteLine();
             }
@@ -511,12 +516,12 @@
                     if (choixInt < 0)
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Choix invalide : le numéro ne peut pas être négatif");
+                        AjouterCouleurErreursChoixUtilisateur("Choix invalide : le numéro ne peut pas être négatif", ConsoleColor.Yellow);
                     }
                     else if (choixInt == 0)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("Choix invalide : l'identifiant ne peut pas être égal à 0");
+                        Console.WriteLine(); 
+                        AjouterCouleurErreursChoixUtilisateur("Choix invalide : l'identifiant ne peut pas être égal à 0", ConsoleColor.Yellow);
                     }
                     else
                     {
@@ -526,9 +531,9 @@
                 catch
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Vous devez saisir un nombre"); 
+                    AjouterCouleurErreursChoixUtilisateur("Erreur : vous devez saisir un nombre", ConsoleColor.Red); 
                 }
-                Console.WriteLine();
+                Console.WriteLine(); 
             }
             return choixInt; 
 
@@ -540,7 +545,7 @@
 
         }
 
-        static void OptionMenu(int numero, string option)
+        static void AjouterCouleurOptionMenu(int numero, string option)
         {
             // Afficher le numéro en couleur
             
@@ -554,6 +559,13 @@
 
         }
 
+        static void AjouterCouleurErreursChoixUtilisateur(string message, ConsoleColor couleur)
+        {
+
+            Console.ForegroundColor = couleur;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
         static void AfficherMenuPrincipal()
         {
             string titreMenu = "--------- Menu --------- ";
@@ -561,14 +573,14 @@
 
             Console.WriteLine(titreMenu);
             Console.WriteLine();
-            OptionMenu(1, "Ajouter un livre");
-            OptionMenu(2, "Afficher les livres");
-            OptionMenu(3, "Modifier un livre");
-            OptionMenu(4, "Supprimer un livre");
-            OptionMenu(5, "Quitter");
+            AjouterCouleurOptionMenu(1, "Ajouter un livre");
+            AjouterCouleurOptionMenu(2, "Afficher les livres");
+            AjouterCouleurOptionMenu(3, "Modifier un livre");
+            AjouterCouleurOptionMenu(4, "Supprimer un livre");
+            AjouterCouleurOptionMenu(5, "Quitter");
             Console.WriteLine();
             Console.WriteLine(finMenu);
-        }
+        } 
         
         static void RevenirAuMenuPrincipal(string optionQuitter)
         {
