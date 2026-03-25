@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        // Fonctions liées aux données (CRUD)  
+        // Fonctions liées aux données (CRUD)    
 
         static void GestionnaireDeLivres(Dictionary<int, List<string>> bibliotheque, int numeroId, string optionQuitter)
         {
@@ -122,9 +122,8 @@
                     else
                     {
                         Console.WriteLine("Vous devez répondre 'o' pour oui ou 'n' pour non.");
-                        Console.WriteLine(); 
+                        Console.WriteLine();  
                     }
-                    Console.WriteLine();
                 }
 
                 return nbIdDisponibles; 
@@ -149,7 +148,6 @@
             {
                 Console.WriteLine("Aucun livre existant dans la bibliothèque.");
                 Console.WriteLine();
-                //RevenirAuMenuPrincipal(optionQuitter); 
             }
             else
             {
