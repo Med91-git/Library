@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        // Fonctions liées au traitement des données (CRUD)  
+        // Fonctions liées au traitement des données (CRUD)   
 
         static void GestionnaireDeLivres(Dictionary<int, List<string>> bibliotheque, int numeroId, string optionQuitter)
         {
@@ -80,8 +80,7 @@
 
                 // Afficher la confirmation de modification en couleur
 
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Livre ajouté."); 
+                AjouterCouleurMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green); 
 
                 // Redéfinir la couleur de la console par défaut
 
@@ -260,8 +259,7 @@
 
                         // Afficher la confirmation de suppression en couleur
 
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Livre n° " + idLivreASupprimer + " supprimé.");  
+                        AjouterCouleurMessageConfirmationCRUD("Livre n° " + idLivreASupprimer + " supprimé.", ConsoleColor.Red); 
 
                         // Redéfinir la couleur de la console par défaut
 
@@ -328,10 +326,9 @@
 
                         // Afficher la confirmation de modification en couleur
 
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Livre n° " + idLivreAModifier + " modifié avec succès !");   
+                        AjouterCouleurMessageConfirmationCRUD("Livre n° " + idLivreAModifier + " modifié avec succès !", ConsoleColor.Green);
                         
-                        // Redéfinir la couleur de la console par défaut
+                        // Redéfinir la couleur de la console par défaut 
                         
                         Console.ResetColor();
                         MettreAJourBibliotheque(bibliotheque, optionQuitter);
@@ -562,6 +559,13 @@
         static void AjouterCouleurErreursChoixUtilisateur(string message, ConsoleColor couleur)
         {
 
+            Console.ForegroundColor = couleur;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        static void AjouterCouleurMessageConfirmationCRUD(string message, ConsoleColor couleur)
+        {
             Console.ForegroundColor = couleur;
             Console.WriteLine(message);
             Console.ResetColor();
