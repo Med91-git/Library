@@ -2,8 +2,6 @@
 {
     internal class Program
     {
-        // Fonctions liées aux données (CRUD)    
-
         static void GestionnaireDeLivres(Dictionary<int, List<string>> bibliotheque, int numeroId, string optionQuitter)
         {
             int optionQuitterProgramme = 5;
@@ -53,10 +51,8 @@
                     return;
                 }
             }
-
-
             
-        }
+        } 
 
         static int AjouterLivre(Dictionary<int, List<string>> bibliotheque, int nbIdDisponibles, string optionQuitter)
         {
@@ -79,7 +75,15 @@
                 nbIdDisponibles++; 
 
                 Console.WriteLine();
-                Console.WriteLine("Votre livre a été ajouté !");  
+
+                // Afficher la confirmation de modification en couleur
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Livre ajouté."); 
+
+                // Redéfinir la couleur de la console par défaut
+
+                Console.ResetColor();
                 Console.WriteLine();
                 
                 // Boucler tant que la réponse de l'utilisateur est différent de oui ET de non 
@@ -179,7 +183,8 @@
         static void AfficherLivreParId(Dictionary<int, List<string>> bibliotheque, int idLivre)
         {
             List<string> livre = bibliotheque[idLivre];
-            string titre = livre[0];
+            string titre = livre[0]; 
+
 
             foreach (string info in livre)
             {
@@ -250,7 +255,15 @@
                     {
                         bibliotheque.Remove(idLivreASupprimer);
                         Console.WriteLine();
-                        Console.WriteLine("Ce livre a été supprimé.");
+
+                        // Afficher la confirmation de suppression en couleur
+
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Livre n° " + idLivreASupprimer + " supprimé.");  
+
+                        // Redéfinir la couleur de la console par défaut
+
+                        Console.ResetColor();
                         MettreAJourBibliotheque(bibliotheque, optionQuitter);
                         RevenirAuMenuPrincipal(optionQuitter);
                         return;
@@ -262,6 +275,7 @@
                     }
                     else
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Vous devez répondre 'o' pour oui ou 'n' pour non."); 
                     }
                 }
@@ -293,7 +307,7 @@
 
                 while (reponseModifierLivre != "o" && reponseModifierLivre != "n")
                 {
-                    Console.WriteLine();
+                    Console.WriteLine(); 
                     reponseModifierLivre = DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + idLivreAModifier + " ? (o/n) : ");
 
                     if (reponseModifierLivre.ToLower() == "o")
@@ -309,7 +323,15 @@
                         bibliotheque[idLivreAModifier][0] = nouveauTitre;
                         bibliotheque[idLivreAModifier][1] = nouvelAuteur;
                         Console.WriteLine();
-                        Console.WriteLine("Ce livre a été modifié.");
+
+                        // Afficher la confirmation de modification en couleur
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Livre n° " + idLivreAModifier + " modifié avec succès !");   
+                        
+                        // Redéfinir la couleur de la console par défaut
+                        
+                        Console.ResetColor();
                         MettreAJourBibliotheque(bibliotheque, optionQuitter);
                         RevenirAuMenuPrincipal(optionQuitter);  
                         return;
@@ -321,6 +343,7 @@
                     }
                     else
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Vous devez répondre 'o' pour oui ou 'n' pour non."); 
                     }
                 }
@@ -451,16 +474,19 @@
                     }
                     else if (choixInt < 0)
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Choix invalide : le numéro ne peut pas être négatif");
                     }
                     else
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Choix invalide : vous devez saisir un numéro entre 1 et 5");
                     }
 
                 }
                 catch
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Erreur : vous devez saisir un nombre");
                 }
                 Console.WriteLine();
@@ -499,6 +525,7 @@
                 }
                 catch
                 {
+                    Console.WriteLine();
                     Console.WriteLine("Vous devez saisir un nombre"); 
                 }
                 Console.WriteLine();
