@@ -2,7 +2,7 @@
 {
     internal class Program
     {
-        // Fonctions liées au traitement des données (CRUD)    
+        // Fonctions liées au traitement des données (CRUD)  
 
         static void GestionnaireDeLivres(Dictionary<int, List<string>> bibliotheque, int numeroId, string optionQuitter)
         {
@@ -72,20 +72,28 @@
 
                 bibliotheque.Add(nbIdDisponibles, new List<string> { titre, auteur });
 
-                // Incrémenter le prochain ID (en cas d'ajout d'un nouveau livre)    
+                // Afficher la confirmation de modification en couleur 
+                Console.WriteLine();
+                AjouterCouleurMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green);
+
+                // Sauvegarder le livre dans un fichier 
+
+                bool cheminFichierValide = SauvegarderLivre(bibliotheque, nbIdDisponibles);
+                
+                if (cheminFichierValide)
+                {
+                    Console.WriteLine();
+                    AjouterCouleurMessageConfirmationCRUD("Livre sauvegardé dans un fichier.", ConsoleColor.Green); 
+                }
+                Console.WriteLine();  
+
+                // Incrémenter le prochain ID (en cas d'ajout d'un nouveau livre)
+                
                 nbIdDisponibles++;
                 Console.WriteLine();
 
-                // Afficher la confirmation de modification en couleur
-
-                AjouterCouleurMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green); 
-
-                Console.WriteLine();
-
                 reponseAjoutLivre = DemanderChoixUtilisateurStr("Voulez-vous ajouter un autre livre ? (o/n) : ");
-                Console.WriteLine();
-
-                // boucler ici pr reponse invalide
+                Console.WriteLine(); 
 
                 while (reponseAjoutLivre != "o" && reponseAjoutLivre != "n")
                 {
@@ -156,7 +164,7 @@
             {
                 // Afficher le(s) livre(s)
 
-                foreach (KeyValuePair<int, List<string>> livre in bibliotheque)
+                foreach (KeyValuePair<int, List<string>> livre in bibliotheque) 
                 {
                     Console.WriteLine("Livre n° " + livre.Key);
                     string titre = livre.Value[0];
@@ -179,7 +187,7 @@
             
         }
 
-        static void AfficherLivreParId(Dictionary<int, List<string>> bibliotheque, int idLivre)
+        static void AfficherLivreParId(Dictionary<int, List<string>> bibliotheque, int idLivre) 
         {
             List<string> livre = bibliotheque[idLivre];
             string titre = livre[0]; 
@@ -355,7 +363,62 @@
             AfficherLivres(bibliotheque, optionQuitter);
         }
 
-        // Fonctions liées à l'interface du menu (affichage + intéractions avec l'utilisateur)   
+        static bool SauvegarderLivre(Dictionary<int, List<string>> bibliotheque, int nbIdDisponibles)
+        {
+            try
+            {
+                // Définir l'emplacement du fichier 
+
+                //string cheminFichier = "C:\\Dev\\ProjetsFormations\\Udemy\\C#\\Test création de fichiers\\testEcritureV1.txt"; // version correcte 
+                string cheminFichier = "C:\\Dev\\ProjetsFormations\\Udemy\\C#\\testexist.txt";  // version test
+
+                // Récupérer id livre  
+
+                int idLivre = nbIdDisponibles; 
+
+                // Récupérer titre + auteur du livre (via la clé du dictionnaire)
+
+                string titre = bibliotheque[idLivre][0];
+                string auteur = bibliotheque[idLivre][1];
+
+                // Définir le contenu et le format de l'enregistrement du livre
+
+                char separateur = ';';
+
+                string idLivreStr = idLivre.ToString(); // Convertir id livre en string pour le bon formatage de l'enregistrement 
+
+                string enregistrementLivre = idLivreStr + separateur + titre + separateur + auteur + "\n"; 
+
+                // 4. Sauvegarde de l'enregistrement du livre selon l'existence du fichier 
+                
+                if (File.Exists(cheminFichier)) // Cas où le fichier existe déjà
+                {
+                    File.AppendAllText(cheminFichier, enregistrementLivre); // Ajouter un enregistrement supplémentaire dans le fichier existant
+                    return true;   
+                }
+                else  // Cas où le fichier n'existe pas  
+                {
+                    File.WriteAllText(cheminFichier, enregistrementLivre);
+                    return true;
+                }
+                
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                Console.WriteLine();  
+                AjouterCouleurErreursChoixUtilisateur("Erreur : échec de la sauvegarde du livre, chemin du fichier incomplet ... !\nVérifier votre chemin : " + ex.Message, ConsoleColor.Red);
+                return false;  
+            } 
+            catch (Exception ex)
+            {
+                Console.WriteLine("Une erreur est survenue : " + ex.Message);
+                return false;  
+            }
+
+        }
+
+
+        // Fonctions liées à l'interface du menu (affichage + intéractions avec l'utilisateur)       
 
         static bool ContientCaractereSpecial(string info, char[] caracterespeciaux)
         {
@@ -377,7 +440,7 @@
         static string DemanderInformationLivre(string message)
         {
             char[] caracteresSpeciauxAutorises = { '\'', '-', '.', ',', ':', '(', ')' };
-            char[] caracteresSpeciauxInterdits = { '#', '$', '%', '&', '*', '+', '=', '<', '>', '?', '@', '[', ']', '/', '^', '_', '`', '{', '}', '|', '~' };
+            char[] caracteresSpeciauxInterdits = { '#', '$', '%', '&', '*', '+', '=', '<', '>', '?', '@', '[', ']', '/', '^', '_', '`', '{', '}', '|', '~', ';' }; 
             string infoLivre = "";
             bool contientCaractereSpecial = false;
 
@@ -566,6 +629,7 @@
             Console.WriteLine(message);
             Console.ResetColor();
         }
+
         static void AfficherMenuPrincipal()
         {
             string titreMenu = "--------- Menu --------- ";
@@ -606,19 +670,18 @@
             }
         }
 
-
         static void Main(string[] args) 
         {
             /* On crée la bibliothèque (une seule fois) afin qu'elle reste accessible partout dans le programme
-            + permettre de pouvoir garder les informations en mémoire pour le CRUD ! */   
-            
+            + permettre de pouvoir garder les informations en mémoire pour le CRUD ! */
+
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
             int numeroId = 1;
-            string optionQuitter = "";  
+            string optionQuitter = "";
 
-            GestionnaireDeLivres(bibliotheque, numeroId, optionQuitter);    
             
-
-        } 
+            GestionnaireDeLivres(bibliotheque, numeroId, optionQuitter);  
+            
+        }
     }
 }
