@@ -1,8 +1,11 @@
-﻿namespace BibliothequeCRUD
+﻿using System.Timers;
+
+namespace BibliothequeCRUD
 {
     internal class Program
     {
         // Fonctions liées au traitement des données (CRUD)  
+
 
         static void GestionnaireDeLivres(Dictionary<int, List<string>> bibliotheque, int numeroId, string optionQuitter)
         {
@@ -31,7 +34,7 @@
                 {
                     Console.Clear();
 
-                    AfficherLivres(bibliotheque, optionQuitter);
+                    AfficherLivres(bibliotheque);
                     RevenirAuMenuPrincipal(optionQuitter); 
                 }
                 else if (numOption == 3)
@@ -153,7 +156,7 @@
             } 
         }
 
-        static void AfficherLivres(Dictionary<int, List<string>> bibliotheque, string optionQuitter)
+        static void AfficherLivres(Dictionary<int, List<string>> bibliotheque)
         {
             if (bibliotheque.Count == 0)
             {
@@ -234,7 +237,7 @@
         static void SupprimerLivre(Dictionary<int, List<string>> bibliotheque, string optionQuitter)
         {
             string reponse = "";
-            AfficherLivres(bibliotheque, optionQuitter);
+            AfficherLivres(bibliotheque);
 
             // Vérifier que la bibliothèque possède au moins un livre avant de supprimer
 
@@ -269,7 +272,7 @@
                         // Redéfinir la couleur de la console par défaut
 
                         Console.ResetColor();
-                        MettreAJourBibliotheque(bibliotheque, optionQuitter);
+                        MettreAJourBibliotheque(bibliotheque);
                         RevenirAuMenuPrincipal(optionQuitter);
                         return;
                     }
@@ -292,7 +295,7 @@
         {
             string reponseModifierLivre = "";
 
-            AfficherLivres(bibliotheque, optionQuitter);
+            AfficherLivres(bibliotheque);
             
             // Vérifier que la bibliothèque possède au moins un livre avant de modifier
 
@@ -336,7 +339,7 @@
                         // Redéfinir la couleur de la console par défaut 
                         
                         Console.ResetColor();
-                        MettreAJourBibliotheque(bibliotheque, optionQuitter);
+                        MettreAJourBibliotheque(bibliotheque);
                         RevenirAuMenuPrincipal(optionQuitter);  
                         return;
                     }
@@ -355,13 +358,17 @@
             
         } 
 
-        static void MettreAJourBibliotheque(Dictionary<int, List<string>> bibliotheque, string optionQuitter)
+        static void MettreAJourBibliotheque(Dictionary<int, List<string>> bibliotheque)
         {
             Console.WriteLine();
             Console.WriteLine("Mise à jour de la bibliothèque : ");
             Console.WriteLine();
-            AfficherLivres(bibliotheque, optionQuitter);
+            AfficherLivres(bibliotheque);
         }
+
+
+        // Fonctions liées à la gestion des fichiers (persistance des données)
+
 
         static bool SauvegarderLivre(Dictionary<int, List<string>> bibliotheque, int nbIdDisponibles)
         {
@@ -370,33 +377,30 @@
                 // Définir l'emplacement du fichier 
 
                 //string cheminFichier = "C:\\Dev\\ProjetsFormations\\Udemy\\C#\\Test création de fichiers\\testEcritureV1.txt"; // version correcte 
-                string cheminFichier = "C:\\Dev\\ProjetsFormations\\Udemy\\C#\\testexist.txt";  // version test
+                string cheminFichier = "testLecture.txt";  // version test 
 
-                // Récupérer id livre  
+                // Récupérer les informations du livre
 
-                int idLivre = nbIdDisponibles; 
-
-                // Récupérer titre + auteur du livre (via la clé du dictionnaire)
+                int idLivre = nbIdDisponibles;                 
 
                 string titre = bibliotheque[idLivre][0];
                 string auteur = bibliotheque[idLivre][1];
 
-                // Définir le contenu et le format de l'enregistrement du livre
+                // Définir le contenu et le format de l'enregistrement du livre 
 
                 char separateur = ';';
-
                 string idLivreStr = idLivre.ToString(); // Convertir id livre en string pour le bon formatage de l'enregistrement 
+                string enregistrementLivre = idLivreStr + separateur + titre + separateur + auteur + "\n";  
 
-                string enregistrementLivre = idLivreStr + separateur + titre + separateur + auteur + "\n"; 
 
-                // 4. Sauvegarde de l'enregistrement du livre selon l'existence du fichier 
+                // Sauvegarde de l'enregistrement du livre selon l'existence du fichier 
                 
-                if (File.Exists(cheminFichier)) // Cas où le fichier existe déjà
+                if (File.Exists(cheminFichier)) 
                 {
-                    File.AppendAllText(cheminFichier, enregistrementLivre); // Ajouter un enregistrement supplémentaire dans le fichier existant
+                    File.AppendAllText(cheminFichier, enregistrementLivre); 
                     return true;   
                 }
-                else  // Cas où le fichier n'existe pas  
+                else   
                 {
                     File.WriteAllText(cheminFichier, enregistrementLivre);
                     return true;
@@ -411,10 +415,61 @@
             } 
             catch (Exception ex)
             {
-                Console.WriteLine("Une erreur est survenue : " + ex.Message);
+                Console.WriteLine();
+                AjouterCouleurErreursChoixUtilisateur("Une erreur est survenue : " + ex.Message, ConsoleColor.Red);
                 return false;  
             }
 
+        }
+
+        static Dictionary<int, List<string>> ChargerLivres(Dictionary<int, List<string>> bibliotheque, string nomFichier)
+        {
+            char separateur = ';'; 
+            
+            try
+            {
+                // Lire les enregistrements du fichier
+
+                string[] enregistrements = File.ReadAllLines(nomFichier);
+
+                 
+
+                foreach (string enregistrement in enregistrements)
+                {                    
+                    // Décomposer chaque enregistrement pour récupérer les infos du dictionnaire séparément
+
+                    string[] livre = enregistrement.Split(separateur);
+
+                    // Vérifier le bon nombre d'élement dans la ligne avant de récupérer les infos
+
+                    if (livre.Count() == 3)
+                    {
+                        string idLivreStr = livre[0];
+
+                        int idLivre = int.Parse(idLivreStr);
+                        
+                        if (!bibliotheque.ContainsKey(idLivre))
+                        {
+                            bibliotheque.Add(idLivre, new List<string> { livre[1], livre[2] });
+                        }
+                    }
+
+                }                
+                 
+            }
+            catch (FileNotFoundException ex) 
+            {
+                Console.WriteLine();
+                AjouterCouleurErreursChoixUtilisateur("Erreur : le fichier n'existe pas : " + ex.Message, ConsoleColor.Red);
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine();
+                AjouterCouleurErreursChoixUtilisateur("Une erreur est survenue : " + ex.Message, ConsoleColor.Red);
+                
+            }
+            return bibliotheque; 
         }
 
 
@@ -676,11 +731,18 @@
             + permettre de pouvoir garder les informations en mémoire pour le CRUD ! */
 
             Dictionary<int,List<string>> bibliotheque = new Dictionary<int,List<string>>();
-            int numeroId = 1;
+
             string optionQuitter = "";
 
-            
-            GestionnaireDeLivres(bibliotheque, numeroId, optionQuitter);  
+            string fichierALire = "testLecture.txt";             
+
+            // Persistance des données au lancement du programme : alimenter la biliothèque par le contenu du fichier
+
+            Dictionary<int,List<string>> bibliothequeAjour = ChargerLivres(bibliotheque, fichierALire); 
+
+            int numeroId = bibliothequeAjour.Count+1; // initialiser id par la prochaine clé disponible (pou un éventuel ajout)
+
+            GestionnaireDeLivres(bibliothequeAjour, numeroId, optionQuitter);  
             
         }
     }
