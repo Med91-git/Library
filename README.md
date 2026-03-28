@@ -27,8 +27,7 @@ L'objectif principal est de pratiquer sur :
 
 ## Technologies utilisées
 
-* C#
-* Visual Studio
+* .NET (C#, Visual Studio)
 * Git
 * Git Bash
 
@@ -44,12 +43,14 @@ Ce projet a été réalisé dans le but de s'entraîner à :
 
 Projet réalisé par Médéric KOTTO MOUYEMA 
 
-## Améliorations Réalisées 
+## Améliorations réalisées 
 
-* Refactorisation du code 
-* Ajout Gestion des saisies utilisateur
+* Refactorisation globale du code 
+* Gestion des saisies utilisateur
+* Persistance des données (sauvegarde/lecture fichier texte, rechargement des données au lancement)
 * Amélioration UX
 
-## Amélioration Prévue 
+## Améliorations prévues 
 
-* Refactorisation du programme en POO  
+* Passage du programme en POO
+* Persistance au format JSON  
