@@ -742,8 +742,8 @@ namespace BibliothequeCRUD
 
             int numeroId = bibliothequeAjour.Count+1; // initialiser id par la prochaine clé disponible (pou un éventuel ajout)
 
-            GestionnaireDeLivres(bibliothequeAjour, numeroId, optionQuitter);  
+            GestionnaireDeLivres(bibliothequeAjour, numeroId, optionQuitter);   
             
-        }
+        } 
     }
 }
