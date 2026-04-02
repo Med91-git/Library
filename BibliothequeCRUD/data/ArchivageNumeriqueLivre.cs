@@ -6,5 +6,6 @@ namespace BibliothequeCRUD.data
 {
     internal class ArchivageNumeriqueLivre
     {
+        string cheminFichier;
     }
 }

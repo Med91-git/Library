@@ -4,7 +4,10 @@ using System.Text;
 
 namespace BibliothequeCRUD.presentation
 {
-    internal class Menu
+    public abstract class Menu
     {
+        protected string message;
+        protected int numero;
+        
     }
 }

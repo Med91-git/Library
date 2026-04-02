@@ -4,7 +4,15 @@ using System.Text;
 
 namespace BibliothequeCRUD.business
 {
-    internal class GestionnaireLivres
+    public class GestionnaireLivres
     {
+        public List<Livre> bibliotheque { get; set; }
+
+        public GestionnaireLivres()
+        {
+            this.bibliotheque = new List<Livre>();
+        }
+
+        
     }
 }

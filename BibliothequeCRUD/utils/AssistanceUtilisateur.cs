@@ -4,7 +4,9 @@ using System.Text;
 
 namespace BibliothequeCRUD.utils
 {
-    internal class AssistanceUtilisateur
+    public class AssistanceUtilisateur
     {
+        
+
     }
 }

@@ -4,7 +4,15 @@ using System.Text;
 
 namespace BibliothequeCRUD.presentation
 {
-    internal class MenuModifier
+    internal class MenuModifier : Menu
     {
+
+        public MenuModifier()
+        {
+            numero = 3;
+            message = "Modifier un livre";
+        }
+
+        
     }
 }

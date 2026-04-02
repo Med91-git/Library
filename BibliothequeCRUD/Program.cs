@@ -1,4 +1,6 @@
-﻿using System.Timers;
+﻿using BibliothequeCRUD.business;
+using BibliothequeCRUD.presentation;
+using System.Timers;
 
 namespace BibliothequeCRUD
 {
@@ -734,16 +736,18 @@ namespace BibliothequeCRUD
 
             string optionQuitter = "";
 
-            string fichierALire = "testLecture.txt";             
+            //string fichierALire = "testLecture.txt";             
 
             // Persistance des données au lancement du programme : alimenter la biliothèque par le contenu du fichier
 
-            Dictionary<int,List<string>> bibliothequeAjour = ChargerLivres(bibliotheque, fichierALire); 
+            //Dictionary<int,List<string>> bibliothequeAjour = ChargerLivres(bibliotheque, fichierALire); 
 
-            int numeroId = bibliothequeAjour.Count+1; // initialiser id par la prochaine clé disponible (pou un éventuel ajout)
+            //int numeroId = bibliothequeAjour.Count+1; // initialiser id par la prochaine clé disponible (pou un éventuel ajout)
 
-            GestionnaireDeLivres(bibliothequeAjour, numeroId, optionQuitter);   
-            
+            //GestionnaireDeLivres(bibliothequeAjour, numeroId, optionQuitter);   
+
+                        
+
         } 
     }
 }

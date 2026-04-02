@@ -4,7 +4,14 @@ using System.Text;
 
 namespace BibliothequeCRUD.presentation
 {
-    internal class MenuSupprimer
+    internal class MenuSupprimer : Menu
     {
+        public MenuSupprimer()
+        {
+            numero = 4;
+            message = "Supprimer un livre";
+        }
+
+        
     }
 }
