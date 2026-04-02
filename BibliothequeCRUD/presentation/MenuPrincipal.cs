@@ -15,8 +15,8 @@ namespace BibliothequeCRUD.presentation
 
         public MenuPrincipal()
         {
-            message = "---- Menu -----";
-            finMenu = "---------------"; 
+            message = "--------- Menu --------- ";
+            finMenu = "------------------------ "; 
             numero = 5;
             optionQuitter = "Quitter";
             optionAjouter = new MenuAjouter();
