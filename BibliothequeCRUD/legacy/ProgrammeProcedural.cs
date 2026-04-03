@@ -271,10 +271,7 @@ namespace BibliothequeCRUD.legacy
                         // Afficher la confirmation de suppression en couleur
 
                         AjouterCouleurMessageConfirmationCRUD("Livre n° " + idLivreASupprimer + " supprimé.", ConsoleColor.Red);
-
-                        // Redéfinir la couleur de la console par défaut
-
-                        Console.ResetColor();
+                        
                         MettreAJourBibliotheque(bibliotheque);
                         RevenirAuMenuPrincipal(optionQuitter);
                         return;
@@ -332,16 +329,13 @@ namespace BibliothequeCRUD.legacy
                         // Remplacer les valeurs du dictionnaire par les saisies utilisateurs (à partir de la clé du dictionnaire) 
 
                         bibliotheque[idLivreAModifier][0] = nouveauTitre;
-                        bibliotheque[idLivreAModifier][1] = nouvelAuteur;
+                        bibliotheque[idLivreAModifier][1] = nouvelAuteur; 
                         Console.WriteLine();
 
                         // Afficher la confirmation de modification en couleur
 
                         AjouterCouleurMessageConfirmationCRUD("Livre n° " + idLivreAModifier + " modifié avec succès !", ConsoleColor.Green);
 
-                        // Redéfinir la couleur de la console par défaut 
-
-                        Console.ResetColor();
                         MettreAJourBibliotheque(bibliotheque);
                         RevenirAuMenuPrincipal(optionQuitter);
                         return;
@@ -523,8 +517,8 @@ namespace BibliothequeCRUD.legacy
                 if (contientCaractereSpecial)
                 {
                     Console.WriteLine();
-                    //Console.WriteLine("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants :");
-                    AjouterCouleurErreursChoixUtilisateur("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants :", ConsoleColor.DarkYellow);
+                    //Console.WriteLine("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants :");  
+                    AjouterCouleurErreursChoixUtilisateur("Saisie invalide, vous pouvez uniquement inclure les caractères spéciaux suivants : ", ConsoleColor.DarkYellow);
                     Console.WriteLine();
                     foreach (char caractereSpecial in caracteresSpeciauxAutorises)
                     {

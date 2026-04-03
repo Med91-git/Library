@@ -22,7 +22,7 @@ namespace BibliothequeCRUD.presentation
             optionAjouter = new MenuAjouter();
             optionAfficher = new MenuAfficher();
             optionModifier = new MenuModifier();
-            optionSupprimer = new MenuSupprimer(); 
+            optionSupprimer = new MenuSupprimer();
         }
         
     }
