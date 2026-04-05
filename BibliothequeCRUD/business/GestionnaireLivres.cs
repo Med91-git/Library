@@ -29,7 +29,19 @@ namespace BibliothequeCRUD.business
 
             bibliotheque.Add(livre);
         }
-        
+
+        public bool LivreExiste()
+        {
+            if (bibliotheque.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public Livre RechercherLivre(int idLivre) 
         {
             // Comparer l'id d'un livre existant de la bibliotheque avec l'id saisi par l'utilisateur
@@ -45,34 +57,19 @@ namespace BibliothequeCRUD.business
              
         }
 
-        public void ModifierLivre(string nouveauTitre, string nouvelAuteur, int idLivre)
+        public void ModifierLivre(string nouveauTitre, string nouvelAuteur, Livre livreAModifier)
         {
-            // Vérifier si le livre a été trouvé
+            // Remplacer les valeurs du livre trouvé par les saisies utilisateurs
 
-            Livre livreRecherche = RechercherLivre(idLivre);
-
-            if (livreRecherche != null)
-            {
-                // Remplacer les valeurs du livre par les saisies utilisateurs
-
-                livreRecherche.titre = nouveauTitre;
-                livreRecherche.auteur = nouvelAuteur;
-            }                       
+            livreAModifier.titre = nouveauTitre;
+            livreAModifier.auteur = nouvelAuteur;                             
             
         } 
 
-        public void SupprimerLivre(int idLivre)
+        public void SupprimerLivre(Livre livreASupprimer)
         {
-            // Vérifier si le livre a été trouvé
-
-            Livre livreRecherche = RechercherLivre(idLivre);
-
-            if (livreRecherche != null)
-            {
-                bibliotheque.Remove(livreRecherche);
-            }                         
-
-        }        
+            bibliotheque.Remove(livreASupprimer);                                 
+        }         
 
     }
 }

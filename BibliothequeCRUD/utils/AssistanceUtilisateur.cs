@@ -11,8 +11,8 @@ namespace BibliothequeCRUD.utils
         {
             Console.Write(message);
             string choixStr = Console.ReadLine().ToString();
-
-            choixStr = choixStr.ToLower().Trim(); 
+            
+            choixStr = choixStr.Trim(); 
 
             return choixStr;
 
@@ -61,9 +61,7 @@ namespace BibliothequeCRUD.utils
             {
                 infoLivre = DemanderChoixUtilisateurStr(message);
 
-                // Gérer cas d'erreur saisie utilisateur vide 
-
-                infoLivre = infoLivre.Trim();
+                // Gérer cas d'erreur saisie utilisateur vide  
 
                 if (infoLivre == "")
                 {
@@ -150,8 +148,74 @@ namespace BibliothequeCRUD.utils
             }
             return choixInt;
 
-        } 
+        }
 
+        public int DemanderOptionMenu(string message, int min, int max)
+        {
+            int choixInt = 0;
+
+            while (true)
+            {
+                // Récupérer la saisie utilisateur
+
+                string choixStr = DemanderChoixUtilisateurStr(message);
+
+                // Vérifier la validité de la saisie utilisateur  
+
+                try
+                {
+                    choixInt = int.Parse(choixStr);
+
+                    if (choixInt >= min && choixInt <= max)
+                    {
+                        break;
+                    }
+                    else if (choixInt < 0)
+                    {
+                        Console.WriteLine();
+                        AfficherMessageErreurChoixUtilisateur("Choix invalide : le numéro ne peut pas être négatif", ConsoleColor.Yellow);
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        AfficherMessageErreurChoixUtilisateur("Choix invalide : vous devez saisir un numéro entre 1 et 5", ConsoleColor.Yellow);
+                    }
+
+                }
+                catch
+                {
+                    Console.WriteLine();
+                    AfficherMessageErreurChoixUtilisateur("Erreur : vous devez saisir un nombre", ConsoleColor.Red);
+                }
+                Console.WriteLine();
+            }
+
+            return choixInt;
+
+        }
+
+        public void RevenirAuMenuPrincipal()
+        {
+            // Mettre un caractère vide pour rentrer dans la condition de la boucle while 
+
+            string optionQuitter = " "; 
+
+            while (optionQuitter != "") 
+            {
+                optionQuitter = DemanderChoixUtilisateurStr("Tapez la touche Entrez pour revenir au menu principal : "); 
+
+                if (optionQuitter == "")
+                {
+                    Console.Clear();
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Vous devez appuyer sur la touche 'Entrez' pour quitter.");
+                }
+                Console.WriteLine();
+            }
+        }
 
 
     }

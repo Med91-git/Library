@@ -11,10 +11,14 @@ namespace BibliothequeCRUD
 
         static void Main(string[] args) 
         {
-            
-            
+            AssistanceUtilisateur assistanceUtilisateur = new AssistanceUtilisateur();
 
+            GestionnaireLivres gestionnaireLivres = new GestionnaireLivres();             
 
+            MenuPrincipal menuPrincipal = new MenuPrincipal(assistanceUtilisateur, gestionnaireLivres);
+
+            menuPrincipal.Naviguer(); 
+             
         }
     }
 }
