@@ -1,4 +1,5 @@
-﻿using BibliothequeCRUD.utils;
+﻿using BibliothequeCRUD.data;
+using BibliothequeCRUD.utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +9,14 @@ namespace BibliothequeCRUD.business
     public class GestionnaireLivres
     {
         public List<Livre> bibliotheque { get; set; }
+        public ArchivageNumeriqueLivre archivageNumeriqueLivre;
 
-        public GestionnaireLivres() 
+
+        public GestionnaireLivres(ArchivageNumeriqueLivre archivageNumeriqueLivre) 
         {
             this.bibliotheque = new List<Livre>();
+            this.archivageNumeriqueLivre = archivageNumeriqueLivre;
+
         }
 
         public void AjouterLivre(string titre, string auteur)
@@ -28,6 +33,11 @@ namespace BibliothequeCRUD.business
             // Ajouter le livre dans la bilbiothèque
 
             bibliotheque.Add(livre);
+
+            // Stocker le livre dans un fichier (sauvegarde)
+
+            archivageNumeriqueLivre.SauvegarderLivre(livre);            
+
         }
 
         public bool LivreExiste()
@@ -69,7 +79,8 @@ namespace BibliothequeCRUD.business
         public void SupprimerLivre(Livre livreASupprimer)
         {
             bibliotheque.Remove(livreASupprimer);                                 
-        }         
+        }
+                
 
     }
 }

@@ -44,17 +44,35 @@ namespace BibliothequeCRUD.presentation
                 string titre = assistanceUtilisateur.DemanderInformationLivre("Saisir le titre : ");
                 string auteur = assistanceUtilisateur.DemanderInformationLivre("Saisir l'auteur : ");
 
-                // Ajouter le livre dans la bibliothèque 
+                // Ajouter le livre dans la bibliothèque et sauvegarde dans un fichier 
 
-                gestionnaireLivres.AjouterLivre(titre, auteur);
+                try
+                {
+                    gestionnaireLivres.AjouterLivre(titre, auteur); 
 
-                // Confirmer ajout du livre à l'utilisateur 
+                    // Confirmer ajout du livre à l'utilisateur 
 
+                    Console.WriteLine();
+                    assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green);
+                    Console.WriteLine();
+
+                    // Confirmer sauvegarde du livre à l'utilisateur
+
+                    assistanceUtilisateur.AfficherMessageConfirmationCRUD("Sauvegarde du fichier effectuée", ConsoleColor.Green);
+                }
+                catch (DirectoryNotFoundException exception)
+                {
+                    Console.WriteLine();
+                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur, le chemin du fichier est incomplet !\nVérifier votre chemin : " + exception.Message, ConsoleColor.Red);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine();
+                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur, le livre n'a pas pu être sauvegardé ... : \n" + exception.Message, ConsoleColor.Red);
+                }                                              
                 Console.WriteLine();
-                assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green);
-                Console.WriteLine();
-
-                // Proposer d'ajouter un autre livre
+                
+                // Proposer d'ajouter un autre livre  
 
                 reponseAjoutLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Voulez-vous ajouter un autre livre ? (o/n) : ");
                 Console.WriteLine();
@@ -74,19 +92,12 @@ namespace BibliothequeCRUD.presentation
                 }
                 else if (reponseAjoutLivre == "n")
                 {
+                    Console.WriteLine();
                     return; 
                 }
-
             }
 
-            
-
-
-
-
-
         }
-
 
     }
 }
