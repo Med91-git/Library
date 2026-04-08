@@ -20,7 +20,7 @@ namespace BibliothequeCRUD.presentation
             this.gestionnaireLivres = gestionnaireLivres;  
         }
 
-        public abstract void Afficher(); 
+        public abstract void Afficher();   
         
         
     }

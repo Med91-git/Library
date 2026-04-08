@@ -114,12 +114,6 @@ namespace BibliothequeCRUD.presentation
                 }
             }
 
-
-
-
-
-
-
         }
 
     }

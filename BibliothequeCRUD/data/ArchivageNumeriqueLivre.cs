@@ -8,7 +8,7 @@ namespace BibliothequeCRUD.data
     public class ArchivageNumeriqueLivre
     {
         string nomFichier;
-        string cheminFichier;
+        internal string cheminFichier;
         string dossierCourant;
         string cheminDossier;
 
@@ -31,7 +31,6 @@ namespace BibliothequeCRUD.data
                 Directory.CreateDirectory(cheminDossier);
             }
         }
-
 
         public void SauvegarderLivre(Livre livreASauvegarder)
         {
@@ -62,5 +61,43 @@ namespace BibliothequeCRUD.data
             
         }
 
+        public List<Livre> ChargerLivres(string nomFichier) 
+        {
+            char separateur = ';';
+            
+            List<Livre> livresExistants = new List<Livre>();
+
+            // Lire les enregistrements du fichier
+
+            string[] enregistrements = File.ReadAllLines(nomFichier);
+            
+            foreach (string enregistrement in enregistrements)
+            {
+                // Décomposer chaque enregistrement pour récupérer les infos séparément
+
+                string[] livre = enregistrement.Split(separateur);  
+
+                // Vérifier le bon nombre d'éléments dans la ligne
+
+                if (livre.Count() == 3)
+                {
+                    string idLivreStr = livre[0];
+
+                    int idLivre = int.Parse(idLivreStr);
+
+                    // Convertir les données récupérées au format objet
+                    
+                    Livre livreExistant = new Livre();
+
+                    livreExistant.id = idLivre;
+                    livreExistant.titre = livre[1];
+                    livreExistant.auteur = livre[2];
+
+                    livresExistants.Add(livreExistant);  
+                }
+            }  
+            return livresExistants;  
+            
+        }
     }
 }

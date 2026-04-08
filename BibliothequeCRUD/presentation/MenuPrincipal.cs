@@ -29,7 +29,7 @@ namespace BibliothequeCRUD.presentation
             
         }
         
-        public override void Afficher()   
+        public override void Afficher()    
         {
             Console.WriteLine(message);
             Console.WriteLine();

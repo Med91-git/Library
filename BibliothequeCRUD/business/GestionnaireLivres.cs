@@ -81,6 +81,21 @@ namespace BibliothequeCRUD.business
             bibliotheque.Remove(livreASupprimer);                                 
         }
                 
+        public List<Livre> ChargerLivresDepuisFichier()
+        {
+            // Récupérer le chemin du fichier
 
+            string cheminFichier = archivageNumeriqueLivre.cheminFichier;
+
+            // Récupérer les livres existants (livres stockés dans le fichier après l'ajout)
+
+            List<Livre> livresExistants = archivageNumeriqueLivre.ChargerLivres(cheminFichier);
+
+            // Mettre à jour la bibliothèque (alimenter la biliothèque par le contenu du fichier)
+
+            bibliotheque = livresExistants; 
+
+            return bibliotheque;  
+        }
     }
 }

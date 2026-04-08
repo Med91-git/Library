@@ -33,20 +33,19 @@ namespace BibliothequeCRUD.presentation
         {
             if (gestionnaireLivres.bibliotheque.Count > 0)
             {
-                foreach (Livre livre in gestionnaireLivres.bibliotheque)
+                foreach (Livre livre in gestionnaireLivres.bibliotheque) 
                 {
                     Console.WriteLine("Livre n° " + livre.id);
                     Console.WriteLine("Titre : " + livre.titre);
                     Console.WriteLine("Auteur : " + livre.auteur);
-                    Console.WriteLine();
-                }
+                    Console.WriteLine(); 
+                } 
             }
             else
             {
                 Console.WriteLine("Aucun livre existant dans la bibliothèque.");
                 Console.WriteLine(); 
             }
-
         }
 
         public void MettreAJourBibliotheque()
