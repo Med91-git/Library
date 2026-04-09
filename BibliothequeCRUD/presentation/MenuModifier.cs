@@ -87,6 +87,7 @@ namespace BibliothequeCRUD.presentation
                                 // Afficher à l'utilisateur la confirmation de modification 
 
                                 assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " modifié avec succès !", ConsoleColor.Green);
+                                
                                 menuAfficher.MettreAJourBibliotheque();
                                 return;
                             }

@@ -10,13 +10,13 @@ namespace BibliothequeCRUD.business
     {
         public List<Livre> bibliotheque { get; set; }
         public ArchivageNumeriqueLivre archivageNumeriqueLivre;
-
+        int prochainId;
+        
 
         public GestionnaireLivres(ArchivageNumeriqueLivre archivageNumeriqueLivre) 
         {
             this.bibliotheque = new List<Livre>();
-            this.archivageNumeriqueLivre = archivageNumeriqueLivre;
-
+            this.archivageNumeriqueLivre = archivageNumeriqueLivre;            
         }
 
         public void AjouterLivre(string titre, string auteur)
@@ -27,12 +27,17 @@ namespace BibliothequeCRUD.business
 
             // Récupérer les informations nécessaires
 
+            livre.id = prochainId; 
             livre.titre = titre;
             livre.auteur = auteur;
 
             // Ajouter le livre dans la bilbiothèque
 
             bibliotheque.Add(livre);
+
+            // Incrémenter l'id
+
+            prochainId++;
 
             // Stocker le livre dans un fichier (sauvegarde)
 
@@ -72,16 +77,19 @@ namespace BibliothequeCRUD.business
             // Remplacer les valeurs du livre trouvé par les saisies utilisateurs
 
             livreAModifier.titre = nouveauTitre;
-            livreAModifier.auteur = nouvelAuteur;                             
-            
-        } 
+            livreAModifier.auteur = nouvelAuteur;
+
+            archivageNumeriqueLivre.SauvegarderBibliotheque(bibliotheque);
+        }
 
         public void SupprimerLivre(Livre livreASupprimer)
         {
-            bibliotheque.Remove(livreASupprimer);                                 
+            bibliotheque.Remove(livreASupprimer);
+
+            archivageNumeriqueLivre.SauvegarderBibliotheque(bibliotheque);
         }
-                
-        public List<Livre> ChargerLivresDepuisFichier()
+
+        public void ChargerLivresDepuisFichier()
         {
             // Récupérer le chemin du fichier
 
@@ -93,9 +101,30 @@ namespace BibliothequeCRUD.business
 
             // Mettre à jour la bibliothèque (alimenter la biliothèque par le contenu du fichier)
 
-            bibliotheque = livresExistants; 
+            bibliotheque = livresExistants;            
+            
+            if (bibliotheque.Count == 0)
+            {
+                prochainId = 1;
+            }
+            else if (bibliotheque.Count > 0)
+            {
+                // Calculer le prochain id pour un eventuel ajout
 
-            return bibliotheque;  
+                Livre premierElement = bibliotheque[0];
+                int idMax = premierElement.id;
+
+                foreach (Livre livre in bibliotheque)
+                {
+                    if (livre.id > idMax)
+                    {
+                        idMax = livre.id;
+                    }
+                }
+                prochainId = idMax + 1;
+            }            
+
         }
+        
     }
 }

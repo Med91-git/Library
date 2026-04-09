@@ -13,7 +13,7 @@ namespace BibliothequeCRUD.business
         
         public Livre()
         {
-            nombreLivre ++;
+            nombreLivre ++; 
 
             id = nombreLivre;
         }

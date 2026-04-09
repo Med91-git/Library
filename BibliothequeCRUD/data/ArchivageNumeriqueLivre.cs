@@ -99,5 +99,35 @@ namespace BibliothequeCRUD.data
             return livresExistants;  
             
         }
+        
+        public void SauvegarderBibliotheque(List<Livre> bibliotheque) 
+        {
+            char separateur = ';';
+            List<string> enregistrements = new List<string>();
+
+            foreach (Livre livre in bibliotheque)
+            {
+                // Récupérer les informations du livre           
+
+                int idLivre = livre.id;
+                string titre = livre.titre;
+                string auteur = livre.auteur;
+
+                // Définir le contenu et le format de l'enregistrement du livre
+                
+                string idLivreStr = idLivre.ToString(); // Convertir id livre en string pour le bon formatage de l'enregistrement
+                string enregistrementLivre = idLivreStr + separateur + titre + separateur + auteur + "\n"; 
+
+                // Récupérer tous les enregistrements 
+
+                enregistrements.Add(enregistrementLivre); 
+            }
+
+            // Mise à jour de la bibliothèque dans le fichier (réecriture du fichier)
+            
+            File.WriteAllLines(cheminFichier, enregistrements);             
+
+        }
+
     }
 }

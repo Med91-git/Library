@@ -19,11 +19,12 @@ namespace BibliothequeCRUD
 
             MenuPrincipal menuPrincipal = new MenuPrincipal(assistanceUtilisateur, gestionnaireLivres);
 
-            // Persistance des données au lancement du programme
+            // Persistance des données au lancement du programme 
 
             try
             {
-                gestionnaireLivres.ChargerLivresDepuisFichier();
+                gestionnaireLivres.ChargerLivresDepuisFichier(); 
+                
             }
             catch (FileNotFoundException ex)
             {
@@ -35,7 +36,7 @@ namespace BibliothequeCRUD
                 Console.WriteLine();
                 assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Une erreur est survenue : " + ex.Message, ConsoleColor.Red);
             }
-
+            
             menuPrincipal.Naviguer();  
             
         }
