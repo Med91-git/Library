@@ -45,12 +45,12 @@ Projet réalisé par Médéric KOTTO MOUYEMA
 
 ## Améliorations réalisées 
 
-* Refactorisation globale du code 
+* Refactorisation globale du code
 * Gestion des saisies utilisateur
 * Persistance des données (sauvegarde/lecture fichier texte, rechargement des données au lancement)
 * Amélioration UX
-
-## Améliorations prévues 
-
 * Passage du programme en POO
-* Persistance au format JSON  
+* Persistance des données au format JSON
+
+
+ 
