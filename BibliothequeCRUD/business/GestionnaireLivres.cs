@@ -39,9 +39,9 @@ namespace BibliothequeCRUD.business
 
             prochainId++;
 
-            // Stocker le livre dans un fichier (sauvegarde)
+            // Stocker la bibliothèque dans un fichier (sauvegarde)
 
-            archivageNumeriqueLivre.SauvegarderLivre(livre);            
+            archivageNumeriqueLivre.SauvegarderBibliotheque(bibliotheque);            
 
         }
 
@@ -110,9 +110,8 @@ namespace BibliothequeCRUD.business
             else if (bibliotheque.Count > 0)
             {
                 // Calculer le prochain id pour un eventuel ajout
-
-                Livre premierElement = bibliotheque[0];
-                int idMax = premierElement.id;
+                
+                int idMax = 0; 
 
                 foreach (Livre livre in bibliotheque)
                 {
