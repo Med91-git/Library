@@ -49,8 +49,7 @@ Projet réalisé par Médéric KOTTO MOUYEMA
 * Gestion des saisies utilisateur
 * Persistance des données (sauvegarde/lecture fichier texte, rechargement des données au lancement)
 * Amélioration UX
+* Développement en couches
 * Passage du programme en POO
 * Persistance des données au format JSON
 
-
- 
