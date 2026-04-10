@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="design\" />
+    <Compile Remove="uml design\**" />
+    <EmbeddedResource Remove="uml design\**" />
+    <None Remove="uml design\**" />
   </ItemGroup>
 
   <ItemGroup>
