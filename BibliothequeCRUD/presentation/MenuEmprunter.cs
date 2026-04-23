@@ -61,13 +61,42 @@ namespace BibliothequeCRUD.presentation
 
                     // Vérifier l'existance du livre 
 
-                    Livre livreARechercher = gestionnaireLivres.RechercherLivre(idLivre);
+                    Livre livreARechercher = gestionnaireLivres.RechercherLivre(idLivre); 
 
-                    // Si le livre trouvé -> afficher le livre, sinon -> afficher message erreur livre introuvable
+                    // Si le livre trouvé -> demander confirmation à l'utilisateur + emprunter s'il accepte, sinon -> redemander à l'utilisateur id valide
 
                     if (livreARechercher != null)
                     {
                         AfficherLivreTrouve(livreARechercher);
+
+                        while (true)
+                        {
+                            reponseEmprunterLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir emprunter le livre n° " + livreARechercher.id + " ? (o/n) : ");
+
+                            if (reponseEmprunterLivre.ToLower() == "o")
+                            {
+                                
+                                Console.WriteLine();
+
+                                // Afficher à l'utilisateur la confirmation de l'emprunt 
+
+                                assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " emprunté.", ConsoleColor.Green); 
+                                
+                                return;
+                            }
+                            else if (reponseEmprunterLivre.ToLower() == "n")
+                            {
+                                Console.WriteLine();
+                                return;
+                            }
+                            else
+                            {
+                                Console.WriteLine();
+                                assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
+                            }
+                            Console.WriteLine();
+                        }
+
                     }
                     else // cas où on a pas trouvé le livre 
                     {
