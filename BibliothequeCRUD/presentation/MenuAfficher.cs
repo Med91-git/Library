@@ -35,10 +35,23 @@ namespace BibliothequeCRUD.presentation
             {
                 foreach (Livre livre in gestionnaireLivres.bibliotheque) 
                 {
-                    Console.WriteLine("Livre n° " + livre.id);
-                    Console.WriteLine("Titre : " + livre.titre);
-                    Console.WriteLine("Auteur : " + livre.auteur);
-                    Console.WriteLine(); 
+                    if (livre.estEmprunte == true)
+                    {
+
+                        Console.WriteLine("Livre n° " + livre.id + " (Emprunté)"); 
+                        Console.WriteLine("Titre : " + livre.titre);
+                        Console.WriteLine("Auteur : " + livre.auteur);
+                        Console.WriteLine("Date début emprunt : " + livre.dateDebutEmprunt.ToString("dd MMMM yyyy"));
+                        Console.WriteLine("Date fin emprunt : " + livre.dateFinEmprunt.ToString("dd MMMM yyyy"));
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Livre n° " + livre.id);
+                        Console.WriteLine("Titre : " + livre.titre);
+                        Console.WriteLine("Auteur : " + livre.auteur);
+                        Console.WriteLine();
+                    }
                 } 
             }
             else
