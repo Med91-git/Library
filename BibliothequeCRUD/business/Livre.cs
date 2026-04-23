@@ -10,15 +10,21 @@ namespace BibliothequeCRUD.business
         public int id { get; set; } 
         public string titre { get; set; }
         public string auteur { get; set; } 
-        
+        public bool estEmprunte { get; set; }
+        public DateTime dateDebutEmprunt { get; init; }
+        public DateTime dateFinEmprunt { get; init; } 
+
+
         public Livre()
         {
             nombreLivre ++; 
 
-            id = nombreLivre;
+            id = nombreLivre; 
         }
         
-        
+
+
+
 
     }
 }

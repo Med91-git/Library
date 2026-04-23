@@ -75,7 +75,7 @@ namespace BibliothequeCRUD.presentation
 
                             if (reponseEmprunterLivre.ToLower() == "o")
                             {
-                                
+                                // Emprunter livre (appeler methode Emprunter de la classe livre)
                                 Console.WriteLine();
 
                                 // Afficher à l'utilisateur la confirmation de l'emprunt 
