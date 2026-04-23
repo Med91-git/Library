@@ -11,8 +11,8 @@ namespace BibliothequeCRUD.business
         public string titre { get; set; }
         public string auteur { get; set; } 
         public bool estEmprunte { get; set; }
-        public DateTime dateDebutEmprunt { get; init; }
-        public DateTime dateFinEmprunt { get; init; } 
+        public DateTime dateDebutEmprunt { get; set; }
+        public DateTime dateFinEmprunt { get; set; } 
 
 
         public Livre()
@@ -20,9 +20,30 @@ namespace BibliothequeCRUD.business
             nombreLivre ++; 
 
             id = nombreLivre; 
-        }
-        
 
+            this.estEmprunte = false; // par défaut le livre est disponible 
+        }
+
+        public List<DateTime> Emprunter()
+        {
+            // Créer une liste vide pour récupérer les dates de l'emprunt 
+
+            List<DateTime> datesEmprunt = new List<DateTime>();
+
+            // Générer les dates de début et de fin de l'emprunt 
+
+            dateDebutEmprunt = DateTime.Now;
+
+            dateFinEmprunt = dateDebutEmprunt.AddDays(21); 
+
+            // Ajouter les dates dans la liste
+
+            datesEmprunt.Add(dateDebutEmprunt);
+            datesEmprunt.Add(dateFinEmprunt);             
+
+            return datesEmprunt;
+
+        }
 
 
 

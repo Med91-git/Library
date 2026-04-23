@@ -37,9 +37,7 @@ namespace BibliothequeCRUD
                 assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Une erreur est survenue : " + ex.Message, ConsoleColor.Red);
             }
 
-            menuPrincipal.Naviguer(); 
-
-            
+            menuPrincipal.Naviguer();       
 
         }
     }
