@@ -9,6 +9,7 @@ namespace BibliothequeCRUD.presentation
     internal class MenuSupprimer : Menu
     {
         MenuAfficher menuAfficher;
+
         public MenuSupprimer(AssistanceUtilisateur assistanceUtilisateur, GestionnaireLivres gestionnaireLivres, MenuAfficher menuAfficher) : base(assistanceUtilisateur, gestionnaireLivres)
         {
             numero = 4;

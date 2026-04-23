@@ -26,10 +26,10 @@ namespace BibliothequeCRUD.presentation
             optionAfficher = new MenuAfficher(assistanceUtilisateur, gestionnaireLivres);
             optionModifier = new MenuModifier(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
             optionSupprimer = new MenuSupprimer(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
-            optionEmprunter = new MenuEmprunter(assistanceUtilisateur, gestionnaireLivres);
+            optionEmprunter = new MenuEmprunter(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
         }
         
-        public override void Afficher()    
+        public override void Afficher()   
         {
             Console.WriteLine(message);
             Console.WriteLine();
@@ -94,7 +94,7 @@ namespace BibliothequeCRUD.presentation
                 else if (numOption == 5)
                 {
                     Console.Clear();
-                    Console.WriteLine("Vous êtes dans le menu Emprunter un livre");
+                    optionEmprunter.EmprunterLivre(); 
                     assistanceUtilisateur.RevenirAuMenuPrincipal();
                 }
                 else if (numOption == optionQuitterProgramme)

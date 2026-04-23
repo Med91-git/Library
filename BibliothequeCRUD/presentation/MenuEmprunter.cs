@@ -8,10 +8,13 @@ namespace BibliothequeCRUD.presentation
 {
     internal class MenuEmprunter : Menu
     {
-        public MenuEmprunter(AssistanceUtilisateur assistanceUtilisateur, GestionnaireLivres gestionnaireLivres) : base(assistanceUtilisateur, gestionnaireLivres)
+        MenuAfficher menuAfficher;
+
+        public MenuEmprunter(AssistanceUtilisateur assistanceUtilisateur, GestionnaireLivres gestionnaireLivres, MenuAfficher menuAfficher) : base(assistanceUtilisateur, gestionnaireLivres)
         {
             numero = 5;
             message = "Emprunter un livre"; 
+            this.menuAfficher = menuAfficher;
         }
 
         public override void Afficher()
@@ -25,6 +28,11 @@ namespace BibliothequeCRUD.presentation
 
             Console.ResetColor();
             Console.WriteLine(". " + message); 
+        }
+
+        public void EmprunterLivre()
+        {
+            menuAfficher.AfficherLivres();
         }
 
     }
