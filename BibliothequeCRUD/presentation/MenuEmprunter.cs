@@ -75,13 +75,17 @@ namespace BibliothequeCRUD.presentation
 
                             if (reponseEmprunterLivre.ToLower() == "o")
                             {
-                                // Emprunter livre (appeler methode Emprunter de la classe livre)
-                                Console.WriteLine();
+
+                                gestionnaireLivres.EmprunterLivre(livreARechercher);
+                                
 
                                 // Afficher à l'utilisateur la confirmation de l'emprunt 
 
-                                assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " emprunté.", ConsoleColor.Green); 
-                                
+                                assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " emprunté.", ConsoleColor.Green);
+                                Console.WriteLine("Date début emprunt : " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy"));
+                                Console.WriteLine("Date fin emprunt : " + livreARechercher.dateFinEmprunt.ToString("dd MMMM yyyy"));  
+                                Console.WriteLine(); 
+
                                 return;
                             }
                             else if (reponseEmprunterLivre.ToLower() == "n")

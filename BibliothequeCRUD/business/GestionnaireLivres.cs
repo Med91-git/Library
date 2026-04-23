@@ -89,6 +89,12 @@ namespace BibliothequeCRUD.business
             archivageNumeriqueLivre.SauvegarderBibliotheque(bibliotheque);
         }
 
+        public void EmprunterLivre(Livre livreAEmprunter)
+        {
+            livreAEmprunter.Emprunter(livreAEmprunter); 
+            
+        }
+
         public void ChargerLivresDepuisFichier()
         {
             // Récupérer le chemin du fichier
