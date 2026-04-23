@@ -13,20 +13,20 @@ namespace BibliothequeCRUD.presentation
         MenuAjouter optionAjouter;
         MenuAfficher optionAfficher; 
         MenuModifier optionModifier;
-        MenuSupprimer optionSupprimer;        
-
+        MenuSupprimer optionSupprimer;
+        MenuEmprunter optionEmprunter;
 
         public MenuPrincipal(AssistanceUtilisateur assistanceUtilisateur, GestionnaireLivres gestionnaireLivres) : base(assistanceUtilisateur, gestionnaireLivres)
         {
             message = "--------- Menu --------- ";
             finMenu = "------------------------ "; 
-            numero = 5; 
+            numero = 6; 
             optionQuitter = "Quitter";
             optionAjouter = new MenuAjouter(assistanceUtilisateur, gestionnaireLivres);
             optionAfficher = new MenuAfficher(assistanceUtilisateur, gestionnaireLivres);
             optionModifier = new MenuModifier(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
             optionSupprimer = new MenuSupprimer(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
-            
+            optionEmprunter = new MenuEmprunter(assistanceUtilisateur, gestionnaireLivres);
         }
         
         public override void Afficher()    
@@ -40,6 +40,7 @@ namespace BibliothequeCRUD.presentation
             optionAfficher.Afficher();
             optionModifier.Afficher();
             optionSupprimer.Afficher();
+            optionEmprunter.Afficher();
 
             // Afficher le numéro du menu principal en couleur 
 
@@ -59,7 +60,7 @@ namespace BibliothequeCRUD.presentation
         public void Naviguer()
         {
             int numOption = 0;
-            int optionQuitterProgramme = 5;
+            int optionQuitterProgramme = 6;
 
             while (numOption != optionQuitterProgramme)
             {
@@ -90,9 +91,15 @@ namespace BibliothequeCRUD.presentation
                     optionSupprimer.SupprimerLivre();
                     assistanceUtilisateur.RevenirAuMenuPrincipal();
                 }
+                else if (numOption == 5)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Vous êtes dans le menu Emprunter un livre");
+                    assistanceUtilisateur.RevenirAuMenuPrincipal();
+                }
                 else if (numOption == optionQuitterProgramme)
                 {
-                    return;
+                    return; 
                 }
             }
 

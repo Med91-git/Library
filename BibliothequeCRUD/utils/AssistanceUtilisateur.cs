@@ -178,7 +178,7 @@ namespace BibliothequeCRUD.utils
                     else
                     {
                         Console.WriteLine();
-                        AfficherMessageErreurChoixUtilisateur("Choix invalide : vous devez saisir un numéro entre 1 et 5", ConsoleColor.Yellow);
+                        AfficherMessageErreurChoixUtilisateur("Choix invalide : vous devez saisir un numéro entre " + min + " et " + max, ConsoleColor.Yellow); 
                     }
 
                 }
