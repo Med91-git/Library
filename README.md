@@ -15,7 +15,7 @@ Il permet de gérer une bibliothèque de livres via les traitements CRUD.
 
 Le diagramme ci-dessous illustre la structure de l'application et la séparation des responsabilités entre les différentes couches.
 
-![Diagramme de classes](BibliothequeCRUD/documentation/uml/library-class-diagram.jpg))
+![Diagramme de classes](BibliothequeCRUD/documentation/uml/library-class-diagram.jpg)
 
 ## Fonctionnalités
 
