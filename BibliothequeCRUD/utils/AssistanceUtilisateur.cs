@@ -50,6 +50,20 @@ namespace BibliothequeCRUD.utils
             Console.ResetColor();
         }
 
+        public void ConfirmerEmpruntLivre(string message, ConsoleColor couleur)
+        {
+            Console.ForegroundColor = couleur;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        public void ConfirmerDisponibiliteEmpruntLivre(string message, ConsoleColor couleur) 
+        {
+            Console.ForegroundColor = couleur;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
         public string DemanderInformationLivre(string message) 
         {
             char[] caracteresSpeciauxAutorises = { '\'', '-', '.', ',', ':', '(', ')' };

@@ -28,13 +28,13 @@ namespace BibliothequeCRUD.business
         {
             // Récupérer les dates de début et de fin de l'emprunt du livre à emprunter 
 
-            livreAEmprunter.dateDebutEmprunt = DateTime.Now; 
+            livreAEmprunter.dateDebutEmprunt = DateTime.Now;
 
-            livreAEmprunter.dateFinEmprunt = dateDebutEmprunt.AddDays(21);            
-            
+            livreAEmprunter.dateFinEmprunt = dateDebutEmprunt.AddDays(21);
+
             // Mettre à jour la disponibilité du livre
 
-            livreAEmprunter.estEmprunte = true;  
+            livreAEmprunter.estEmprunte = true; 
             
         }
 

@@ -92,7 +92,6 @@ namespace BibliothequeCRUD.business
         public void EmprunterLivre(Livre livreAEmprunter)
         {
             livreAEmprunter.Emprunter(livreAEmprunter); 
-            
         }
 
         public void ChargerLivresDepuisFichier()

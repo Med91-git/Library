@@ -39,7 +39,7 @@ namespace BibliothequeCRUD.presentation
             Console.WriteLine();
         }
 
-        public void EmprunterLivre()
+        public void EmprunterLivre() 
         {
             string reponseEmprunterLivre = ""; 
 
@@ -59,47 +59,64 @@ namespace BibliothequeCRUD.presentation
                 {
                     int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à emprunter : ");
 
-                    // Vérifier l'existance du livre 
+                    // Vérifier l'existance du livre dans la bibliothèque 
 
                     Livre livreARechercher = gestionnaireLivres.RechercherLivre(idLivre); 
 
-                    // Si le livre trouvé -> demander confirmation à l'utilisateur + emprunter s'il accepte, sinon -> redemander à l'utilisateur id valide
-
                     if (livreARechercher != null)
                     {
-                        AfficherLivreTrouve(livreARechercher);
+                        // Vérifier que la disponibilité du livre trouvé pour un emprunt
 
-                        while (true)
+                        Console.WriteLine();
+                        if (livreARechercher.estEmprunte == true)
                         {
-                            reponseEmprunterLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir emprunter le livre n° " + livreARechercher.id + " ? (o/n) : ");
-
-                            if (reponseEmprunterLivre.ToLower() == "o")
-                            {
-
-                                gestionnaireLivres.EmprunterLivre(livreARechercher);
-                                
-
-                                // Afficher à l'utilisateur la confirmation de l'emprunt 
-
-                                assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " emprunté.", ConsoleColor.Green);
-                                Console.WriteLine("Date début emprunt : " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy"));
-                                Console.WriteLine("Date fin emprunt : " + livreARechercher.dateFinEmprunt.ToString("dd MMMM yyyy"));  
-                                Console.WriteLine(); 
-
-                                return;
-                            }
-                            else if (reponseEmprunterLivre.ToLower() == "n")
-                            {
-                                Console.WriteLine();
-                                return;
-                            }
-                            else
-                            {
-                                Console.WriteLine();
-                                assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
-                            }
-                            Console.WriteLine();
+                            assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible d'emprunter le livre n° " + livreARechercher.id + " car il a déjà été emprunté...", ConsoleColor.Red);
+                            Console.WriteLine(); 
+                            EmprunterLivre(); 
                         }
+                        else
+                        {
+                            assistanceUtilisateur.ConfirmerDisponibiliteEmpruntLivre("Le livre n° " + livreARechercher.id + " est disponible à l'emprunt : ", ConsoleColor.Green); 
+                            AfficherLivreTrouve(livreARechercher);
+
+                            // Demander confirmation emprunt
+
+                            while (true)
+                            {
+                                reponseEmprunterLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir emprunter le livre n° " + livreARechercher.id + " ? (o/n) : ");
+
+                                if (reponseEmprunterLivre.ToLower() == "o")
+                                {
+                                    // Emprunter le livre
+
+                                    gestionnaireLivres.EmprunterLivre(livreARechercher);
+                                    Console.WriteLine();
+
+                                    // Afficher à l'utilisateur la confirmation de l'emprunt 
+
+                                    assistanceUtilisateur.ConfirmerEmpruntLivre("Livre n° " + livreARechercher.id + " emprunté.", ConsoleColor.Green);
+                                    Console.WriteLine();
+                                    Console.WriteLine("Date début emprunt : " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy"));
+                                    Console.WriteLine("Date fin emprunt : " + livreARechercher.dateFinEmprunt.ToString("dd MMMM yyyy"));
+                                    Console.WriteLine();
+                                    menuAfficher.MettreAJourBibliotheque();
+                                    Console.WriteLine(); 
+                                    return;
+                                }
+                                else if (reponseEmprunterLivre.ToLower() == "n")
+                                {
+                                    Console.WriteLine();
+                                    return;
+                                }
+                                else
+                                {
+                                    Console.WriteLine();
+                                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
+                                }
+                                Console.WriteLine();
+                            }
+
+                        }                        
 
                     }
                     else // cas où on a pas trouvé le livre 
@@ -109,8 +126,6 @@ namespace BibliothequeCRUD.presentation
                         Console.WriteLine(); 
                     }
                 }
-
-
 
             }
         }
