@@ -47,12 +47,14 @@ Projet réalisé par Médéric KOTTO MOUYEMA
 
 ## Améliorations réalisées 
 
-* Refactorisation globale du code
-* Gestion des saisies utilisateur
-* Persistance des données (sauvegarde/lecture fichier texte, rechargement des données au lancement)
-* Amélioration UX
-* Développement en couches
-* Passage du programme en POO
-* Persistance des données au format JSON
-* Ajout fonctionnalité : emprunter un livre
+* Refactorisation globale du code  
+* Passage du programme en programmation orientée objet (POO)  
+* Développement en couches  
+* Gestion des saisies utilisateur  
+* Amélioration de l’expérience utilisateur (UX)  
+* Mise en place de la persistance des données :
+  * Sauvegarde et lecture via fichier texte
+  * Migration vers un format JSON
+* Rechargement automatique des données au lancement de l’application  
+* Ajout de la fonctionnalité : emprunter un livre
 
