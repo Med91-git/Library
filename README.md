@@ -9,12 +9,7 @@ Menu principal de l'application console :
 ## Description
 
 Ce projet est une application console développée en C#.
-Il permet de gérer une petite bibliothèque de livres avec les opérations CRUD.
-
-L'objectif principal est de pratiquer sur :
-
-* Des notions essentielles de développement **back-end**
-* L'utilisation de **Git** pour la gestion de version
+Il permet de gérer une bibliothèque de livres via les traitements CRUD.
 
 ## Fonctionnalités
 
@@ -31,10 +26,11 @@ L'objectif principal est de pratiquer sur :
 * Git
 * Git Bash
 
-## Objectif pédagogique
+## Objectifs pédagogiques
 
 Ce projet a été réalisé dans le but de s'entraîner à :
 
+* Pratiquer sur des notions essentielles de développement **back-end**
 * Structurer un programme en procédural
 * Manipuler des structures de données (Liste et Dictionnaire)
 * Utiliser Git pour suivre l'évolution du code
@@ -52,4 +48,5 @@ Projet réalisé par Médéric KOTTO MOUYEMA
 * Développement en couches
 * Passage du programme en POO
 * Persistance des données au format JSON
+* Ajout fonctionnalité : emprunter un livre
 
