@@ -11,6 +11,12 @@ Menu principal de l'application console :
 Ce projet est une application console développée en C#.
 Il permet de gérer une bibliothèque de livres via les traitements CRUD.
 
+## 📊 Diagramme de classes
+
+Le diagramme ci-dessous illustre la structure de l'application et la séparation des responsabilités entre les différentes couches.
+
+![Diagramme de classes](documentation/uml/library-class-diagram.jpg)
+
 ## Fonctionnalités
 
 * Afficher un menu interactif
