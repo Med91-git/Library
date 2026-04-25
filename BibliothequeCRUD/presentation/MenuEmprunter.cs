@@ -94,10 +94,8 @@ namespace BibliothequeCRUD.presentation
 
                                     // Afficher à l'utilisateur la confirmation de l'emprunt 
 
-                                    assistanceUtilisateur.ConfirmerEmpruntLivre("Livre n° " + livreARechercher.id + " emprunté.", ConsoleColor.Green);
-                                    Console.WriteLine();
-                                    Console.WriteLine("Date début emprunt : " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy"));
-                                    Console.WriteLine("Date fin emprunt : " + livreARechercher.dateFinEmprunt.ToString("dd MMMM yyyy"));
+                                    assistanceUtilisateur.ConfirmerEmpruntLivre("Livre n° " + livreARechercher.id + " emprunté le " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy") + ".\n", ConsoleColor.Green);
+                                    Console.WriteLine("Vous devez rendre ce livre au plus tard le " + livreARechercher.dateFinEmprunt.ToString("dd MMMM yyyy")+ ".");
                                     Console.WriteLine();
                                     menuAfficher.MettreAJourBibliotheque();
                                     Console.WriteLine(); 
