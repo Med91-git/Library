@@ -65,7 +65,7 @@ namespace BibliothequeCRUD.presentation
 
                     if (livreARechercher != null)
                     {
-                        // Vérifier que la disponibilité du livre trouvé pour un emprunt
+                        // Vérifier que le livre trouvé est disponible pour un emprunt
 
                         Console.WriteLine();
                         if (livreARechercher.estEmprunte == true)

@@ -59,7 +59,7 @@ namespace BibliothequeCRUD.presentation
                 {
                     int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à modifier : ");
 
-                    // Vérifier l'existance du livre 
+                    // Vérifier l'existance du livre  
 
                     Livre livreARechercher = gestionnaireLivres.RechercherLivre(idLivre);
 
@@ -67,43 +67,53 @@ namespace BibliothequeCRUD.presentation
 
                     if (livreARechercher != null)
                     {
-                        AfficherLivreTrouve(livreARechercher); 
 
-                        while (true)
+                        if (livreARechercher.estEmprunte == true)
                         {
-                            reponseModifierLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + livreARechercher.id + " ? (o/n) : ");
-
-                            if (reponseModifierLivre.ToLower() == "o")
-                            {
-                                // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur)
-
-                                Console.WriteLine();
-
-                                string nouveauTitre = assistanceUtilisateur.DemanderInformationLivre("Saisir nouveau titre : ");
-                                string nouvelAuteur = assistanceUtilisateur.DemanderInformationLivre("Saisir nouvel auteur : ");
-
-                                gestionnaireLivres.ModifierLivre(nouveauTitre, nouvelAuteur, livreARechercher);
-                                Console.WriteLine();
-
-                                // Afficher à l'utilisateur la confirmation de modification 
-
-                                assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " modifié avec succès !", ConsoleColor.Green);
-                                
-                                menuAfficher.MettreAJourBibliotheque();
-                                return;
-                            }
-                            else if (reponseModifierLivre.ToLower() == "n")
-                            {
-                                Console.WriteLine();
-                                return;
-                            }
-                            else
-                            {
-                                Console.WriteLine();
-                                assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
-                            }
-                            Console.WriteLine();   
+                            assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de modifier le livre n° " + livreARechercher.id + " car il a été emprunté...", ConsoleColor.Red);
+                            Console.WriteLine(); 
+                            ModifierLivre();
                         }
+                        else
+                        {
+                            AfficherLivreTrouve(livreARechercher);
+                            while (true)
+                            {
+                                reponseModifierLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + livreARechercher.id + " ? (o/n) : ");
+
+                                if (reponseModifierLivre.ToLower() == "o")
+                                {
+                                    // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur)
+
+                                    Console.WriteLine();
+
+                                    string nouveauTitre = assistanceUtilisateur.DemanderInformationLivre("Saisir nouveau titre : ");
+                                    string nouvelAuteur = assistanceUtilisateur.DemanderInformationLivre("Saisir nouvel auteur : ");
+
+                                    gestionnaireLivres.ModifierLivre(nouveauTitre, nouvelAuteur, livreARechercher);
+                                    Console.WriteLine();
+
+                                    // Afficher à l'utilisateur la confirmation de modification 
+
+                                    assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " modifié avec succès !", ConsoleColor.Green);
+
+                                    menuAfficher.MettreAJourBibliotheque();
+                                    return;
+                                }
+                                else if (reponseModifierLivre.ToLower() == "n")
+                                {
+                                    Console.WriteLine();
+                                    return;
+                                }
+                                else
+                                {
+                                    Console.WriteLine();
+                                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
+                                }
+                                Console.WriteLine();
+                            }
+                        }
+                        
                         
                     }
                     else // cas où on a pas trouvé le livre

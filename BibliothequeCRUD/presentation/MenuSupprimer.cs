@@ -67,35 +67,44 @@ namespace BibliothequeCRUD.presentation
 
                     if (livreARechercher != null)
                     {
-                        AfficherLivreTrouve(livreARechercher);
-
-                        while (true)
+                        if (livreARechercher.estEmprunte == true)
                         {
-                            reponseSupprimerLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir supprimer le livre n° " + livreARechercher.id + " ? (o/n) : ");
-
-                            if (reponseSupprimerLivre.ToLower() == "o")
-                            {
-                                gestionnaireLivres.SupprimerLivre(livreARechercher); 
-                                Console.WriteLine();
-
-                                // Afficher à l'utilisateur la confirmation de suppression 
-
-                                assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " supprimé.", ConsoleColor.Red);
-                                menuAfficher.MettreAJourBibliotheque();
-                                return;
-                            }
-                            else if (reponseSupprimerLivre.ToLower() == "n")
-                            {
-                                Console.WriteLine();
-                                return;
-                            }
-                            else
-                            {
-                                Console.WriteLine();
-                                assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
-                            }
-                            Console.WriteLine(); 
+                            assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de supprimer le livre n° " + livreARechercher.id + " car il a été emprunté...", ConsoleColor.Red);
+                            Console.WriteLine();
+                            SupprimerLivre();
                         }
+                        else
+                        {
+                            AfficherLivreTrouve(livreARechercher);
+                            while (true)
+                            {
+                                reponseSupprimerLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir supprimer le livre n° " + livreARechercher.id + " ? (o/n) : ");
+
+                                if (reponseSupprimerLivre.ToLower() == "o")
+                                {
+                                    gestionnaireLivres.SupprimerLivre(livreARechercher);
+                                    Console.WriteLine();
+
+                                    // Afficher à l'utilisateur la confirmation de suppression 
+
+                                    assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " supprimé.", ConsoleColor.Red);
+                                    menuAfficher.MettreAJourBibliotheque();
+                                    return;
+                                }
+                                else if (reponseSupprimerLivre.ToLower() == "n")
+                                {
+                                    Console.WriteLine();
+                                    return;
+                                }
+                                else
+                                {
+                                    Console.WriteLine();
+                                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
+                                }
+                                Console.WriteLine();
+                            }
+                        }
+                        
 
                     }
                     else // cas où on a pas trouvé le livre
