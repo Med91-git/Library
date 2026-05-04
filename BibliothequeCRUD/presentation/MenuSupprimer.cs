@@ -55,7 +55,7 @@ namespace BibliothequeCRUD.presentation
             }
             else
             {
-                while (true)
+                while (reponseSupprimerLivre != "n" && reponseSupprimerLivre != "o")
                 {
                     int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à supprimer : ");
 
@@ -71,7 +71,6 @@ namespace BibliothequeCRUD.presentation
                         {
                             assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de supprimer le livre n° " + livreARechercher.id + " car il a été emprunté...", ConsoleColor.Red);
                             Console.WriteLine();
-                            SupprimerLivre();
                         }
                         else
                         {
@@ -89,12 +88,12 @@ namespace BibliothequeCRUD.presentation
 
                                     assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " supprimé.", ConsoleColor.Red);
                                     menuAfficher.MettreAJourBibliotheque();
-                                    return;
+                                    return; 
                                 }
                                 else if (reponseSupprimerLivre.ToLower() == "n")
                                 {
                                     Console.WriteLine();
-                                    return;
+                                    return; 
                                 }
                                 else
                                 {

@@ -60,7 +60,7 @@ namespace BibliothequeCRUD.presentation
         public void Naviguer()
         {
             int numOption = 0;
-            int optionQuitterProgramme = 6;
+            int optionQuitterProgramme = numero; 
 
             while (numOption != optionQuitterProgramme)
             {

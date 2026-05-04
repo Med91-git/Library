@@ -55,7 +55,7 @@ namespace BibliothequeCRUD.presentation
             }
             else
             {
-                while (true)
+                while (reponseEmprunterLivre != "n" && reponseEmprunterLivre != "o")
                 {
                     int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à emprunter : ");
 
@@ -72,7 +72,6 @@ namespace BibliothequeCRUD.presentation
                         {
                             assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible d'emprunter le livre n° " + livreARechercher.id + " car il a déjà été emprunté...", ConsoleColor.Red);
                             Console.WriteLine(); 
-                            EmprunterLivre(); 
                         }
                         else
                         {
@@ -101,9 +100,9 @@ namespace BibliothequeCRUD.presentation
                                     Console.WriteLine(); 
                                     return;
                                 }
-                                else if (reponseEmprunterLivre.ToLower() == "n")
+                                else if (reponseEmprunterLivre.ToLower() == "n") 
                                 {
-                                    Console.WriteLine();
+                                    Console.WriteLine(); 
                                     return;
                                 }
                                 else

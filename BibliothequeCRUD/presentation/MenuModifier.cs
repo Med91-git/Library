@@ -55,7 +55,7 @@ namespace BibliothequeCRUD.presentation
             }
             else
             {
-                while (true)
+                while (reponseModifierLivre != "n" && reponseModifierLivre != "o")
                 {
                     int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à modifier : ");
 
@@ -72,7 +72,6 @@ namespace BibliothequeCRUD.presentation
                         {
                             assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de modifier le livre n° " + livreARechercher.id + " car il a été emprunté...", ConsoleColor.Red);
                             Console.WriteLine(); 
-                            ModifierLivre();
                         }
                         else
                         {
