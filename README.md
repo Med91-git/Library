@@ -17,7 +17,7 @@ Le diagramme ci-dessous illustre la structure de l'application et la séparation
 
 ![Diagramme de classes](BibliothequeCRUD/documentation/uml/library-class-diagram.jpg)
 
-## Fonctionnalités
+## Fonctionnalités principales
 
 * Afficher un menu interactif
 * Ajouter un livre
