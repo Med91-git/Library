@@ -31,6 +31,10 @@ namespace BibliothequeCRUD.presentation
             Console.WriteLine(". " + message);
         }
 
+        public void RendreLivre()
+        {
+            menuAfficher.AfficherLivres();
+        }
 
     }
 }

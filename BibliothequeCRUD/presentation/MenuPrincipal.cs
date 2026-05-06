@@ -100,6 +100,12 @@ namespace BibliothequeCRUD.presentation
                     optionEmprunter.EmprunterLivre(); 
                     assistanceUtilisateur.RevenirAuMenuPrincipal();
                 }
+                else if (numOption == 6)
+                {
+                    Console.Clear();
+                    optionRendre.RendreLivre();
+                    assistanceUtilisateur.RevenirAuMenuPrincipal(); 
+                }
                 else if (numOption == optionQuitterProgramme)
                 {
                     return; 
