@@ -15,18 +15,20 @@ namespace BibliothequeCRUD.presentation
         MenuModifier optionModifier;
         MenuSupprimer optionSupprimer;
         MenuEmprunter optionEmprunter;
+        MenuRendre optionRendre;
 
         public MenuPrincipal(AssistanceUtilisateur assistanceUtilisateur, GestionnaireLivres gestionnaireLivres) : base(assistanceUtilisateur, gestionnaireLivres)
         {
             message = "--------- Menu --------- ";
             finMenu = "------------------------ "; 
-            numero = 6; 
+            numero = 7; 
             optionQuitter = "Quitter";
             optionAjouter = new MenuAjouter(assistanceUtilisateur, gestionnaireLivres);
             optionAfficher = new MenuAfficher(assistanceUtilisateur, gestionnaireLivres);
             optionModifier = new MenuModifier(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
             optionSupprimer = new MenuSupprimer(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
             optionEmprunter = new MenuEmprunter(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
+            optionRendre = new MenuRendre(assistanceUtilisateur, gestionnaireLivres, optionAfficher);
         }
         
         public override void Afficher()   
@@ -41,6 +43,7 @@ namespace BibliothequeCRUD.presentation
             optionModifier.Afficher();
             optionSupprimer.Afficher();
             optionEmprunter.Afficher();
+            optionRendre.Afficher();
 
             // Afficher le numéro du menu principal en couleur 
 

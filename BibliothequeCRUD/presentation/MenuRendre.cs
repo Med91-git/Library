@@ -9,11 +9,13 @@ namespace BibliothequeCRUD.presentation
 {
     internal class MenuRendre : Menu
     {
+        MenuAfficher menuAfficher;
 
-        public MenuRendre(AssistanceUtilisateur assistanceUtilisateur, GestionnaireLivres gestionnaireLivres) : base(assistanceUtilisateur, gestionnaireLivres)
+        public MenuRendre(AssistanceUtilisateur assistanceUtilisateur, GestionnaireLivres gestionnaireLivres, MenuAfficher menuAfficher) : base(assistanceUtilisateur, gestionnaireLivres)
         {
             numero = 6;
             message = "Rendre un livre";
+            this.menuAfficher = menuAfficher;
         }
 
         public override void Afficher()
