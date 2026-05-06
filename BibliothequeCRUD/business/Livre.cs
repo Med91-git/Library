@@ -38,10 +38,10 @@ namespace BibliothequeCRUD.business
             
         }
 
-        public void Rendre(Livre livreARendre)
+        public void Rendre(Livre livreARendre) 
         {
-
-            // Récupérer la date de remise du livre (date d'aujourd'hui)
+            
+            // Récupérer la date de remise du livre 
 
             livreARendre.dateRetourLivre = DateTime.Now;
 

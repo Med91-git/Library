@@ -73,7 +73,7 @@ namespace BibliothequeCRUD.presentation
                                 {
                                     // Rendre le livre
 
-                                    
+                                    gestionnaireLivres.RendreLivre(livreARechercher);
                                     Console.WriteLine();
 
                                     // Afficher à l'utilisateur la confirmation de la remise du livre 

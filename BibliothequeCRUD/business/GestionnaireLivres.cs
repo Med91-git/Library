@@ -97,6 +97,15 @@ namespace BibliothequeCRUD.business
 
         }
 
+        public void RendreLivre(Livre livreARendre)
+        {
+            livreARendre.Rendre(livreARendre); 
+
+            archivageNumeriqueLivre.SauvegarderBibliotheque(bibliotheque);
+
+        }
+
+
         public void ChargerLivresDepuisFichier()
         {
             // Récupérer le chemin du fichier
