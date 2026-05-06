@@ -13,7 +13,7 @@ namespace BibliothequeCRUD.business
         public bool estEmprunte { get; set; }
         public DateTime dateDebutEmprunt { get; set; }
         public DateTime dateFinEmprunt { get; set; } 
-        public DateOnly dateRetourLivre { get; set; }
+        public DateTime dateRetourLivre { get; set; }
 
         public Livre()
         {
@@ -38,7 +38,17 @@ namespace BibliothequeCRUD.business
             
         }
 
-        
+        public void Rendre(Livre livreARendre)
+        {
+
+            // Récupérer la date de remise du livre (date d'aujourd'hui)
+
+            livreARendre.dateRetourLivre = DateTime.Now;
+
+            // Mettre à jour la disponibilité du livre (le livre n'est plus emprunté et de nouveau disponible à la bibliothèque)
+
+            livreARendre.estEmprunte = false; 
+        }
 
 
 

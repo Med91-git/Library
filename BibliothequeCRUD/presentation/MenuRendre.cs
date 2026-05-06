@@ -73,11 +73,14 @@ namespace BibliothequeCRUD.presentation
                                 {
                                     // Rendre le livre
 
+                                    
                                     Console.WriteLine();
 
                                     // Afficher à l'utilisateur la confirmation de la remise du livre 
 
-                                    assistanceUtilisateur.ConfirmerEmpruntLivre("Livre n° " + livreARechercher.id + " emprunté le " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy") + " a été rendu à la bibliothèque", ConsoleColor.Green);
+                                    assistanceUtilisateur.ConfirmerEmpruntLivre("Livre n° " + livreARechercher.id + " emprunté le " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy") + " a été rendu à la bibliothèque le " + livreARechercher.dateRetourLivre.ToString("dd MMMM yyyy"), ConsoleColor.Green);
+                                    Console.WriteLine();
+                                    menuAfficher.MettreAJourBibliotheque();
                                     Console.WriteLine();
                                     return;
                                 }
