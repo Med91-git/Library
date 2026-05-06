@@ -57,4 +57,5 @@ Projet réalisé par Médéric KOTTO MOUYEMA
   * Migration vers un format JSON
 * Rechargement automatique des données au lancement de l’application  
 * Ajout de la fonctionnalité : emprunter un livre
+* Ajout de la fonctionnalité : rendre un livre
 
