@@ -30,15 +30,6 @@ namespace BibliothequeCRUD.presentation
             Console.WriteLine(". " + message); 
         }
 
-        public void AfficherLivreTrouve(Livre livreTrouve)
-        {
-            Console.WriteLine();
-            //Console.WriteLine("Livre n° : " + livreTrouve.id);
-            Console.WriteLine("Titre : " + livreTrouve.titre);
-            Console.WriteLine("Auteur : " + livreTrouve.auteur);
-            Console.WriteLine();
-        }
-
         public void ModifierLivre() 
         {
             string reponseModifierLivre = "";            
@@ -75,7 +66,7 @@ namespace BibliothequeCRUD.presentation
                         }
                         else
                         {
-                            AfficherLivreTrouve(livreARechercher);
+                            menuAfficher.AfficherLivreTrouve(livreARechercher); 
                             while (true)
                             {
                                 reponseModifierLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + livreARechercher.id + " ? (o/n) : ");

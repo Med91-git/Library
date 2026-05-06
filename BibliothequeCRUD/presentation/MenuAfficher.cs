@@ -61,6 +61,14 @@ namespace BibliothequeCRUD.presentation
             }
         }
 
+        public void AfficherLivreTrouve(Livre livreTrouve)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Titre : " + livreTrouve.titre);
+            Console.WriteLine("Auteur : " + livreTrouve.auteur);
+            Console.WriteLine();
+        }
+
         public void MettreAJourBibliotheque()
         {
             Console.WriteLine();

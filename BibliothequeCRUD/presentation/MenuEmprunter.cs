@@ -30,15 +30,6 @@ namespace BibliothequeCRUD.presentation
             Console.WriteLine(". " + message); 
         }
 
-        public void AfficherLivreTrouve(Livre livreTrouve)
-        {
-            Console.WriteLine();
-            //Console.WriteLine("Livre n° : " + livreTrouve.id);
-            Console.WriteLine("Titre : " + livreTrouve.titre);
-            Console.WriteLine("Auteur : " + livreTrouve.auteur);
-            Console.WriteLine();
-        }
-
         public void EmprunterLivre() 
         {
             string reponseEmprunterLivre = ""; 
@@ -76,7 +67,7 @@ namespace BibliothequeCRUD.presentation
                         else
                         {
                             assistanceUtilisateur.ConfirmerDisponibiliteEmpruntLivre("Le livre n° " + livreARechercher.id + " est disponible à l'emprunt : ", ConsoleColor.Green); 
-                            AfficherLivreTrouve(livreARechercher);
+                            menuAfficher.AfficherLivreTrouve(livreARechercher);
 
                             // Demander confirmation emprunt
 
