@@ -13,7 +13,7 @@ namespace BibliothequeCRUD.business
         public bool estEmprunte { get; set; }
         public DateTime dateDebutEmprunt { get; set; }
         public DateTime dateFinEmprunt { get; set; } 
-
+        public DateOnly dateRetourLivre { get; set; }
 
         public Livre()
         {
@@ -37,6 +37,8 @@ namespace BibliothequeCRUD.business
             livreAEmprunter.estEmprunte = true; 
             
         }
+
+        
 
 
 

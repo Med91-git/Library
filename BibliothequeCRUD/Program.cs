@@ -38,7 +38,6 @@ namespace BibliothequeCRUD
             }
 
             menuPrincipal.Naviguer();    
-            
 
         }
     }
