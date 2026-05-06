@@ -33,6 +33,8 @@ namespace BibliothequeCRUD.presentation
 
         public void RendreLivre()
         {
+            string reponseRendreLivre = "";
+
             menuAfficher.AfficherLivres();
 
             // Vérifier que la bibliothèque possède au moins un livre avant de rendre un livre
@@ -45,24 +47,67 @@ namespace BibliothequeCRUD.presentation
             }
             else
             {
-                int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à rendre : ");
-
-                // Vérifier l'existance du livre dans la bibliothèque 
-
-                Livre livreARechercher = gestionnaireLivres.RechercherLivre(idLivre);
-
-                if (livreARechercher != null)
+                while (reponseRendreLivre != "n" && reponseRendreLivre != "o")
                 {
-                    // Vérifier que le livre trouvé est déjà emprunté pour pouvoir le rendre
+                    int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à rendre : ");
 
-                    if (livreARechercher.estEmprunte == true)
+                    // Vérifier l'existance du livre dans la bibliothèque 
+
+                    Livre livreARechercher = gestionnaireLivres.RechercherLivre(idLivre);
+
+                    if (livreARechercher != null)
                     {
-                        menuAfficher.AfficherLivreTrouve(livreARechercher); 
+                        // Vérifier que le livre trouvé est déjà emprunté pour pouvoir le rendre
+
+                        if (livreARechercher.estEmprunte == true)
+                        {
+                            menuAfficher.AfficherLivreTrouve(livreARechercher);
+
+                            // Demander confirmation restitution
+
+                            while (true)
+                            {
+                                reponseRendreLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir rendre le livre n° " + livreARechercher.id + " ? (o/n) : ");
+
+                                if (reponseRendreLivre.ToLower() == "o")
+                                {
+                                    // Rendre le livre
+
+                                    Console.WriteLine();
+
+                                    // Afficher à l'utilisateur la confirmation de la remise du livre 
+
+                                    assistanceUtilisateur.ConfirmerEmpruntLivre("Livre n° " + livreARechercher.id + " emprunté le " + livreARechercher.dateDebutEmprunt.ToString("dd MMMM yyyy") + " a été rendu à la bibliothèque", ConsoleColor.Green);
+                                    Console.WriteLine();
+                                    return;
+                                }
+                                else if (reponseRendreLivre.ToLower() == "n")
+                                {
+                                    Console.WriteLine();
+                                    return;
+                                }
+                                else
+                                {
+                                    Console.WriteLine();
+                                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
+                                }
+                                Console.WriteLine();
+                            }
+
+
+                        }
+                        else
+                        {
+                            assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de rendre le livre n° " + livreARechercher.id + " car il n'a pas été emprunté...", ConsoleColor.Red);
+                            Console.WriteLine();
+                        }
+
                     }
-                    else
+                    else // cas où on a pas trouvé le livre 
                     {
-                        assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de rendre le livre n° " + livreARechercher.id + " car il n'a pas été emprunté...", ConsoleColor.Red);
-                        Console.WriteLine(); 
+                        Console.WriteLine();
+                        assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur : livre introuvable ", ConsoleColor.Red);
+                        Console.WriteLine();
                     }
 
                 }
