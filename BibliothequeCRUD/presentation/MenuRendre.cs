@@ -34,6 +34,41 @@ namespace BibliothequeCRUD.presentation
         public void RendreLivre()
         {
             menuAfficher.AfficherLivres();
+
+            // Vérifier que la bibliothèque possède au moins un livre avant de rendre un livre
+
+            bool livreExiste = gestionnaireLivres.LivreExiste();
+
+            if (!livreExiste)
+            {
+                return;
+            }
+            else
+            {
+                int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à rendre : ");
+
+                // Vérifier l'existance du livre dans la bibliothèque 
+
+                Livre livreARechercher = gestionnaireLivres.RechercherLivre(idLivre);
+
+                if (livreARechercher != null)
+                {
+                    // Vérifier que le livre trouvé est déjà emprunté pour pouvoir le rendre
+
+                    if (livreARechercher.estEmprunte == true)
+                    {
+                        menuAfficher.AfficherLivreTrouve(livreARechercher); 
+                    }
+                    else
+                    {
+                        assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de rendre le livre n° " + livreARechercher.id + " car il n'a pas été emprunté...", ConsoleColor.Red);
+                        Console.WriteLine(); 
+                    }
+
+                }
+
+            }
+
         }
 
     }
