@@ -33,7 +33,8 @@ namespace BibliothequeCRUD.presentation
 
         public void RendreLivre()
         {
-            string reponseRendreLivre = "";
+            string reponseConfirmation = "";
+            string reponseProposition = "";
 
             menuAfficher.AfficherLivres();
 
@@ -47,7 +48,7 @@ namespace BibliothequeCRUD.presentation
             }
             else
             {
-                while (reponseRendreLivre != "n" && reponseRendreLivre != "o")
+                while (livreExiste) 
                 {
                     int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à rendre : ");
 
@@ -63,13 +64,13 @@ namespace BibliothequeCRUD.presentation
                         {
                             menuAfficher.AfficherLivreTrouve(livreARechercher);
 
-                            // Demander confirmation restitution
+                            // Demander confirmation de la remise du livre
 
                             while (true)
                             {
-                                reponseRendreLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir rendre le livre n° " + livreARechercher.id + " ? (o/n) : ");
+                                reponseConfirmation = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir rendre le livre n° " + livreARechercher.id + " ? (o/n) : ");
 
-                                if (reponseRendreLivre.ToLower() == "o")
+                                if (reponseConfirmation.ToLower() == "o")
                                 {
                                     // Rendre le livre
 
@@ -82,9 +83,35 @@ namespace BibliothequeCRUD.presentation
                                     Console.WriteLine();
                                     menuAfficher.MettreAJourBibliotheque();
                                     Console.WriteLine();
-                                    return;
+                                    break;
                                 }
-                                else if (reponseRendreLivre.ToLower() == "n")
+                                else if (reponseConfirmation.ToLower() == "n")
+                                {
+                                    Console.WriteLine();
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine();
+                                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
+                                }
+                                Console.WriteLine();
+                            }
+
+                            // Proposer de rendre un autre livre  
+
+                            while (true)
+                            {
+
+                                reponseProposition = assistanceUtilisateur.DemanderChoixUtilisateurStr("Souhaitez-vous rendre un autre livre ? (o/n) : ");
+                                reponseProposition = reponseProposition.ToLower();
+
+                                if (reponseProposition == "o") // si utilisateur accepte -> permettre à l'utilisateur de choisir un livre à rendre
+                                {
+                                    Console.WriteLine();
+                                    break;
+                                }
+                                else if (reponseProposition == "n") // si utilisateur refuse -> revenir au menu principal
                                 {
                                     Console.WriteLine();
                                     return;
@@ -95,18 +122,18 @@ namespace BibliothequeCRUD.presentation
                                     assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
                                 }
                                 Console.WriteLine();
-                            }
-
+                            } 
 
                         }
                         else
                         {
+                            Console.WriteLine();
                             assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Impossible de rendre le livre n° " + livreARechercher.id + " car il n'a pas été emprunté...", ConsoleColor.Red);
                             Console.WriteLine();
                         }
-
+                        
                     }
-                    else // cas où on a pas trouvé le livre 
+                    else 
                     {
                         Console.WriteLine();
                         assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur : livre introuvable ", ConsoleColor.Red);
