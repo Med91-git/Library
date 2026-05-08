@@ -115,7 +115,7 @@ namespace BibliothequeCRUD.presentation
                             reponsePropositionEmprunt = assistanceUtilisateur.DemanderChoixUtilisateurStr("Souhaitez-vous emprunter un autre livre ? (o/n) : ");
                             reponsePropositionEmprunt = reponsePropositionEmprunt.ToLower();
 
-                            if (reponsePropositionEmprunt == "o") // si utilisateur accepte -> permettre à l'utilisateur de choisir un livre à rendre
+                            if (reponsePropositionEmprunt == "o") // si utilisateur accepte -> permettre à l'utilisateur de choisir un livre à emprunter
                             {
                                 Console.WriteLine();
                                 break;

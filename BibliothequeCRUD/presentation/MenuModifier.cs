@@ -32,7 +32,8 @@ namespace BibliothequeCRUD.presentation
 
         public void ModifierLivre() 
         {
-            string reponseModifierLivre = "";            
+            string reponseConfirmationModifier = "";            
+            string reponsePropositionModifier = "";            
 
             menuAfficher.AfficherLivres();
             
@@ -46,7 +47,7 @@ namespace BibliothequeCRUD.presentation
             }
             else
             {
-                while (reponseModifierLivre != "n" && reponseModifierLivre != "o")
+                while (livreExiste)
                 {
                     int idLivre = assistanceUtilisateur.DemanderIdLivre("Saisir l'identifiant du livre à modifier : ");
 
@@ -69,9 +70,9 @@ namespace BibliothequeCRUD.presentation
                             menuAfficher.AfficherLivreTrouve(livreARechercher); 
                             while (true)
                             {
-                                reponseModifierLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + livreARechercher.id + " ? (o/n) : ");
+                                reponseConfirmationModifier = assistanceUtilisateur.DemanderChoixUtilisateurStr("Etes-vous sûr de vouloir modifier le livre n° " + livreARechercher.id + " ? (o/n) : ");
 
-                                if (reponseModifierLivre.ToLower() == "o")
+                                if (reponseConfirmationModifier.ToLower() == "o")
                                 {
                                     // Demander à l'utilisateur les nouvelles valeurs du livre à saisir (titre + auteur)
 
@@ -88,12 +89,12 @@ namespace BibliothequeCRUD.presentation
                                     assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre n° " + livreARechercher.id + " modifié avec succès !", ConsoleColor.Green);
 
                                     menuAfficher.MettreAJourBibliotheque();
-                                    return;
+                                    break;
                                 }
-                                else if (reponseModifierLivre.ToLower() == "n")
+                                else if (reponseConfirmationModifier.ToLower() == "n")
                                 {
                                     Console.WriteLine();
-                                    return;
+                                    break;
                                 }
                                 else
                                 {
@@ -103,10 +104,35 @@ namespace BibliothequeCRUD.presentation
                                 Console.WriteLine();
                             }
                         }
-                        
-                        
+
+                        // Proposer de modifier un autre livre  
+
+                        while (true)
+                        {
+
+                            reponsePropositionModifier = assistanceUtilisateur.DemanderChoixUtilisateurStr("Souhaitez-vous modifier un autre livre ? (o/n) : ");
+                            reponsePropositionModifier = reponsePropositionModifier.ToLower();
+
+                            if (reponsePropositionModifier == "o") // si utilisateur accepte -> permettre à l'utilisateur de choisir un livre à modifier
+                            {
+                                Console.WriteLine();
+                                break;
+                            }
+                            else if (reponsePropositionModifier == "n") // si utilisateur refuse -> revenir au menu principal
+                            {
+                                Console.WriteLine();
+                                return;
+                            }
+                            else
+                            {
+                                Console.WriteLine();
+                                assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Vous devez répondre 'o' pour oui ou 'n' pour non.", ConsoleColor.Yellow);
+                            }
+                            Console.WriteLine();
+                        }
+
                     }
-                    else // cas où on a pas trouvé le livre
+                    else 
                     {
                         Console.WriteLine();
                         assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur : livre introuvable ", ConsoleColor.Red);
