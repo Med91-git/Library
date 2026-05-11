@@ -38,40 +38,50 @@ namespace BibliothequeCRUD.presentation
 
             while (true)
             {
-                // Demander à l'utilisateur les informations nécessaires pour la création d'un livre 
-
                 Console.WriteLine();
                 string titre = assistanceUtilisateur.DemanderInformationLivre("Saisir le titre : ");
-                string auteur = assistanceUtilisateur.DemanderInformationLivre("Saisir l'auteur : ");
 
-                // Ajouter le livre dans la bibliothèque et sauvegarde dans un fichier 
+                bool doublonTitre = gestionnaireLivres.VerifierDoublonTitreLivre(titre);
 
-                try
+                if (doublonTitre == true)
                 {
-                    gestionnaireLivres.AjouterLivre(titre, auteur); 
-
-                    // Confirmer ajout du livre à l'utilisateur 
-
                     Console.WriteLine();
-                    assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green);
-                    Console.WriteLine();
-
-                    // Confirmer sauvegarde du livre à l'utilisateur
-
-                    assistanceUtilisateur.AfficherMessageConfirmationCRUD("Sauvegarde du fichier effectuée", ConsoleColor.Green);
+                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur(titre + " existe déjà dans la bibliothèque", ConsoleColor.Red);
                 }
-                catch (DirectoryNotFoundException exception)
+                else
                 {
-                    Console.WriteLine();
-                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur, le chemin du fichier est incomplet !\nVérifier votre chemin : " + exception.Message, ConsoleColor.Red);
+                    string auteur = assistanceUtilisateur.DemanderInformationLivre("Saisir l'auteur : ");
+
+                    // Ajouter le livre dans la bibliothèque et sauvegarde dans un fichier 
+
+                    try
+                    {
+                        gestionnaireLivres.AjouterLivre(titre, auteur);
+
+                        // Confirmer ajout du livre à l'utilisateur 
+
+                        Console.WriteLine();
+                        assistanceUtilisateur.AfficherMessageConfirmationCRUD("Livre ajouté.", ConsoleColor.Green);
+                        Console.WriteLine();
+
+                        // Confirmer sauvegarde du livre à l'utilisateur
+
+                        assistanceUtilisateur.AfficherMessageConfirmationCRUD("Sauvegarde du fichier effectuée", ConsoleColor.Green);
+                    }
+                    catch (DirectoryNotFoundException exception)
+                    {
+                        Console.WriteLine();
+                        assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur, le chemin du fichier est incomplet !\nVérifier votre chemin : " + exception.Message, ConsoleColor.Red);
+                    }
+                    catch (Exception exception)
+                    {
+                        Console.WriteLine();
+                        assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur, le livre n'a pas pu être sauvegardé ... : \n" + exception.Message, ConsoleColor.Red);
+                    }
+                    
                 }
-                catch (Exception exception)
-                {
-                    Console.WriteLine();
-                    assistanceUtilisateur.AfficherMessageErreurChoixUtilisateur("Erreur, le livre n'a pas pu être sauvegardé ... : \n" + exception.Message, ConsoleColor.Red);
-                }                                              
                 Console.WriteLine();
-                
+
                 // Proposer d'ajouter un autre livre  
 
                 reponseAjoutLivre = assistanceUtilisateur.DemanderChoixUtilisateurStr("Voulez-vous ajouter un autre livre ? (o/n) : ");

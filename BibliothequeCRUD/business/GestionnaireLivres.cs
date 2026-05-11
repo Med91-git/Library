@@ -19,6 +19,20 @@ namespace BibliothequeCRUD.business
             this.archivageNumeriqueLivre = archivageNumeriqueLivre;            
         }
 
+        public bool VerifierDoublonTitreLivre(string saisieUtilisateur)
+        {
+            foreach (Livre livre in bibliotheque)
+            {
+                string titreLivreBibliotheque = livre.titre;
+                
+                if (saisieUtilisateur.Equals(titreLivreBibliotheque))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void AjouterLivre(string titre, string auteur)
         {
             // Instancier un nouveau livre
